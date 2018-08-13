@@ -1,0 +1,9 @@
+
+
+    <ul  class="list-unstyled">
+        <li *ngFor="let po of post$|async">
+         <h1 class="display-6">{{po.post_title}}</h1>
+          <div [innerHTML]="po.post_body" ></div>
+        </li>
+    </ul>
+  

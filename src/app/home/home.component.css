@@ -1,0 +1,20 @@
+
+
+   body, html {
+    height: 100%;
+}
+    .bg {
+        /* The image used */
+        background-image: url('../../assets/home.jpg');
+        background-size: cover;
+        /* Full height */
+        min-height: 750px;
+        min-width: 1074px;
+        -webkit-background-size: cover;
+        -moz-background-size: cover;
+        -o-background-size: cover;
+        /* Center and scale the image nicely */
+        background-position: center;
+        background-repeat: no-repeat;
+        background-size: 100%;
+    }

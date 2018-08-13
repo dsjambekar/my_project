@@ -1,0 +1,8 @@
+  <ul class="list-unstyled">
+    <li *ngFor="let post of posts|async">
+     <a [href]="'/posts/' + post.slug"><h1 class="display-5">{{post.post_title}}</h1></a>
+      <div [innerHTML]="post.post_body" ></div>
+    </li>
+</ul>
+
+
