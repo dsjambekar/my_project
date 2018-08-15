@@ -1,0 +1,9 @@
+<div *ngIf="hasUserSignedIn == false">
+    <button (click)="socialSignIn()">Sign in with Google</button>
+</div>
+<div *ngIf="hasUserSignedIn == true">
+    <button (click)="socialSignOut()">Sign out</button>
+</div>
+
+
+

@@ -1,36 +1,59 @@
 <!--The content below is only a placeholder and can be replaced.-->
-
-  <!-- Navigation -->
-  <nav class="navbar navbar-expand-lg navbar-dark fixed-top" style="height: 35px;background-color: orange">
-      <div class="container">
-        <a class="navbar-brand" href="#">A Healthy Blog</a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
-          <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarResponsive">
-          <ul class="navbar-nav ml-auto">
-            <li class="nav-item">
-              <a class="nav-link" routerLinkActive="active" routerLink="/home">Home</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" routerLinkActive="active" routerLink="/blog">Blog</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" routerLinkActive="active" routerLink="/posts/about">About</a>
-              </li>
-              <!-- <li class="nav-item">
-                <a class="nav-link" routerLinkActive="active" routerLink="/repo">Repository</a>
-              </li> -->
-          </ul>
-        </div>
-      </div>
-    </nav>
-  <div class="container" style="margin-top:35px; min-height: 700px">
-      
-    <router-outlet></router-outlet>
-
+<nav class="navbar navbar-inverse">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="#">Logo</a>
+    </div>
+    <div class="collapse navbar-collapse" id="myNavbar">
+      <ul class="nav navbar-nav">
+        <li class="active"><a href="#">Home</a></li>
+        <li><a href="#">About</a></li>
+        <li><a href="#">Projects</a></li>
+        <li><a href="#">Contact</a></li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        <li>
+          <app-signin (signedInOrOut) = "checkIfUserSignedIn($event)" ></app-signin>
+        </li>
+      </ul>
+    </div>
   </div>
+</nav>
 
+<div class="container-fluid text-center">
+  <div class="row content">
+    <div class="col-sm-1 sidenav">
+      <p><a href="#">Link</a></p>
+      <p><a href="#">Link</a></p>
+      <p><a href="#">Link</a></p>
+    </div>
+    <div class="col-sm-9 text-left">
+        <div *ngIf="hasUserSignedIn == false">
+            <img class="img-responsive" src="../assets/repo_home.jpg" alt="Chania">
+        </div>
+        <div *ngIf="hasUserSignedIn == true">
+          Welcome {{userdata.name}}
+        </div>
+    </div>
+    <div class="col-sm-2 sidenav">
+      <div class="well">
+        <p>ADS</p>
+      </div>
+      <div class="well">
+        <p>ADS</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<footer class="container-fluid text-center">
+  <p>Footer Text</p>
+</footer>
 
 
 

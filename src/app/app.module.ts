@@ -20,6 +20,30 @@ import { QuestionPaperComponent } from './repository/question-paper/question-pap
 
 import { FroalaEditorModule, FroalaViewModule } from 'angular-froala-wysiwyg';
 import { HomeComponent } from './home/home.component';
+import { SigninComponent } from './signin/signin.component';
+import { StorageServiceModule} from 'angular-webstorage-service';
+import { SESSION_STORAGE, WebStorageService} from 'angular-webstorage-service';
+
+
+import {
+  SocialLoginModule,
+  AuthServiceConfig,
+  GoogleLoginProvider,
+
+} from "angular-6-social-login";
+
+// Configs
+export function getAuthServiceConfigs() {
+  let config = new AuthServiceConfig(
+      [
+
+        {
+          id: GoogleLoginProvider.PROVIDER_ID,
+          provider: new GoogleLoginProvider("559209906236-nfn6k9mhe762ld96ubkit1tluvu6gj8r.apps.googleusercontent.com")
+        }
+      ]);
+  return config;
+}
 
 @NgModule({
   declarations: [
@@ -33,16 +57,26 @@ import { HomeComponent } from './home/home.component';
     NewComponent,
     QuestionPaperComponent,
     HomeComponent,
+    SigninComponent
   ],
   imports: [
     BrowserModule
-    ,AppRoutingModule
-    ,AngularFireModule.initializeApp( environment.firebase)
-    ,AngularFirestoreModule
-    ,AngularFireDatabaseModule 
-    ,FroalaEditorModule.forRoot(), FroalaViewModule.forRoot()
+    , AppRoutingModule
+    , AngularFireModule.initializeApp( environment.firebase)
+    , AngularFirestoreModule
+    , AngularFireDatabaseModule
+    , FroalaEditorModule.forRoot(), FroalaViewModule.forRoot()
+    , SocialLoginModule
+    , StorageServiceModule
+
   ],
-  providers: [],
+  providers: [
+    {
+      provide: AuthServiceConfig,
+      useFactory: getAuthServiceConfigs
+    }
+  ],
   bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule {
+}
