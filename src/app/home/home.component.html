@@ -1,8 +1,18 @@
-<div class="bg text-center "  style=" align-content:center;align-items: center;;">
-
-
-
-<h1  style="color: white;font-family:Verdana, Geneva, Tahoma, sans-serif;align-content:center;padding-top:50px">
-    First step towards healthy lifestyle </h1>
-<input style="width: 70%;height:35px;" class="text-center" type="text" placeholder="Search..">
-</div>
+<!-- <ul>
+  <li *ngFor="let todo of (todos$ | async)">
+    {{ todo.text }}
+    <p>{{todo.type}}</p>
+  </li>
+</ul> -->
+<ul class="nav nav-tabs">
+    <li class="nav-item">
+        <a  class="nav-link" routerLink="dashboard" routerLinkActive="active" >All Questions</a>
+      </li>
+  <li class="nav-item">
+    <a  class="nav-link" routerLink="new" routerLinkActive="active" >New Question</a>
+  </li>
+  <!-- <li class="nav-item">
+    <a class="nav-link disabled" href="#">Disabled</a>
+  </li> -->
+</ul>
+<router-outlet></router-outlet>

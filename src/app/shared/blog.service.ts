@@ -9,18 +9,23 @@ import { Observable } from 'rxjs';
 export class BlogService {
 
   findPostBySlug(slug: string):  AngularFireList<Post[]> {
-    return this.db.list('/posts',ref=>ref.orderByChild('slug')
+    return this.db.list('/posts', ref => ref.orderByChild('slug')
      .equalTo(slug).limitToFirst(1)
     )
   }
   constructor(private db: AngularFireDatabase) { }
 
   getAllPosts(): AngularFireList<Post[]> {
-    return this.db.list('/posts', ref=>ref.orderByChild('is_page').equalTo(false).limitToFirst(10));
+    return this.db.list('/posts', ref => ref.orderByChild('is_page').equalTo(false).limitToFirst(10));
   }
 
   getAllPages(): AngularFireList<Post[]> {
-    return this.db.list('/posts', ref=>ref.orderByChild('is_page').equalTo(true).limitToFirst(10));
+    return this.db.list('/posts', ref => ref.orderByChild('is_page').equalTo(true).limitToFirst(10));
+  }
+
+  updatePostBySlug(slug: string, content: string) {
+    this.findPostBySlug(slug);
+
   }
 
 }

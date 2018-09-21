@@ -1,41 +1,39 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { AngularFirestore } from 'angularfire2/firestore';
 import { Observable } from 'rxjs';
 import { SessionService } from './shared/session.service';
+import { AuthService } from './shared/auth.service';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
-export class AppComponent {
+export class AppComponent implements OnInit {
   title = 'The Repository';
-  public userdata:any;
-  public hasUserSignedIn= false;
+  isUserLoggedIn: boolean;
+  user: any;
+  constructor(public AuthService: AuthService) {
 
+   }
 
-  items: Observable<any[]>;
-  constructor(db: AngularFirestore,private sessionService: SessionService) {
-    this.items = db.collection('posts').valueChanges();
+   ngOnInit() {  }
+
+   onLoginChange(user: any) {
+     this.user = user;
+     // this.userService.addNode(this.user);
+   }
+
+  login(){
+    this.AuthService.loginWithGoogle();
+    this.isUserLoggedIn = true;
   }
 
-  checkIfUserSignedIn(userdata:any){
-    // if(this.sessionService.getFromLocal('userData')){
-    //   this.userdata = this.sessionService.getFromLocal('userData')
-    //   return true;
-    // } else {
-    //   return false;
-    // }
-    if(userdata){
-      this.hasUserSignedIn = true;
-      this.userdata = userdata;
-    } else if(userdata==null){
-      this.hasUserSignedIn = false;
-      this.userdata = null;
-
-    }
-
-    //return signedIn;
+  logout(){
+    this.AuthService.logout();
+    this.isUserLoggedIn = false;
   }
+
+
 
 }

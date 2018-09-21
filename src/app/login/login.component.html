@@ -1,3 +1,7 @@
-<p>
-  login works!
-</p>
+<div *ngIf="!AuthService.userDetails">
+  <button (click)="login()">login</button>
+</div>
+<div *ngIf="AuthService.user | async as user">
+
+  <button (click)="logout()" >Logout</button>
+</div>

@@ -1,6 +1,8 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { FormsModule } from '@angular/forms';
+import { HttpClientModule } from '@angular/common/http';
 
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
@@ -11,8 +13,11 @@ import { PostsContainerComponent } from './posts-container/posts-container.compo
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 import { AngularFireModule } from 'angularfire2';
 import { AngularFirestoreModule } from 'angularfire2/firestore';
-import { environment } from '../environments/environment.prod';
+import { AngularFireAuthModule } from 'angularfire2/auth';
 import { AngularFireDatabaseModule } from 'angularfire2/database';
+
+import { environment } from '../environments/environment.prod';
+
 import { PostPageComponent } from './post-page/post-page.component';
 import { DashboardComponent } from './repository/dashboard/dashboard.component';
 import { NewComponent } from './repository/new/new.component';
@@ -23,27 +28,33 @@ import { HomeComponent } from './home/home.component';
 import { SigninComponent } from './signin/signin.component';
 import { StorageServiceModule} from 'angular-webstorage-service';
 import { SESSION_STORAGE, WebStorageService} from 'angular-webstorage-service';
+import { NgxEditorModule } from 'ngx-editor';
 
+import { AuthService } from './shared/auth.service';
 
 import {
   SocialLoginModule,
   AuthServiceConfig,
   GoogleLoginProvider,
 
-} from "angular-6-social-login";
+} from 'angular-6-social-login';
+import { ContactComponent } from './contact/contact.component';
+import { AuthGuard } from './shared/auth-guard.service';
+
+
 
 // Configs
-export function getAuthServiceConfigs() {
-  let config = new AuthServiceConfig(
-      [
+// export function getAuthServiceConfigs() {
+//   let config = new AuthServiceConfig(
+//       [
 
-        {
-          id: GoogleLoginProvider.PROVIDER_ID,
-          provider: new GoogleLoginProvider("559209906236-nfn6k9mhe762ld96ubkit1tluvu6gj8r.apps.googleusercontent.com")
-        }
-      ]);
-  return config;
-}
+//         {
+//           id: GoogleLoginProvider.PROVIDER_ID,
+//           provider: new GoogleLoginProvider("559209906236-9g1a12rompmqdspd5ngrg88cppv4ceov.apps.googleusercontent.com")
+//         }
+//       ]);
+//   return config;
+// }
 
 @NgModule({
   declarations: [
@@ -57,7 +68,8 @@ export function getAuthServiceConfigs() {
     NewComponent,
     QuestionPaperComponent,
     HomeComponent,
-    SigninComponent
+    SigninComponent,
+    ContactComponent,
   ],
   imports: [
     BrowserModule
@@ -68,13 +80,14 @@ export function getAuthServiceConfigs() {
     , FroalaEditorModule.forRoot(), FroalaViewModule.forRoot()
     , SocialLoginModule
     , StorageServiceModule
-
+    , AngularFireAuthModule
+    , FormsModule
+    , NgxEditorModule
+    , HttpClientModule
   ],
   providers: [
-    {
-      provide: AuthServiceConfig,
-      useFactory: getAuthServiceConfigs
-    }
+    AuthService,
+    AuthGuard
   ],
   bootstrap: [AppComponent]
 })

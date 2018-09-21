@@ -7,18 +7,20 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="#">Logo</a>
+      <a class="navbar-brand">Logo</a>
     </div>
     <div class="collapse navbar-collapse" id="myNavbar">
       <ul class="nav navbar-nav">
-        <li class="active"><a href="#">Home</a></li>
-        <li><a href="#">About</a></li>
-        <li><a href="#">Projects</a></li>
-        <li><a href="#">Contact</a></li>
+        <li><a routerLink="/home">Home</a></li>
+        <!-- <li><a href="#">About</a></li> -->
+        <!-- <li><a href="#">Projects</a></li> -->
+        <li>  <a routerLink="/contact">Contact</a></li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
         <li>
-          <app-signin (signedInOrOut) = "checkIfUserSignedIn($event)" ></app-signin>
+          <!-- <app-signin (signedInOrOut) = "checkIfUserSignedIn($event)" ></app-signin> -->
+          <app-login (loggedIn)="onLoginChange($event)"></app-login>
+
         </li>
       </ul>
     </div>
@@ -27,20 +29,34 @@
 
 <div class="container-fluid text-center">
   <div class="row content">
-    <div class="col-sm-1 sidenav">
-      <p><a href="#">Link</a></p>
-      <p><a href="#">Link</a></p>
-      <p><a href="#">Link</a></p>
-    </div>
-    <div class="col-sm-9 text-left">
-        <div *ngIf="hasUserSignedIn == false">
-            <img class="img-responsive" src="../assets/repo_home.jpg" alt="Chania">
+
+    <div class="col-lg-2 sidenav">
+      <i class="fa fa-american-sign-language-interpreting fa-5x" aria-hidden="true"> </i>
+        <div *ngIf="AuthService.user | async as user">
+            <div>{{user.displayName}} </div> <img [src]="user.photoURL" style="height:75px;width:75px">
+
+          <p><a href="#">Questions (20)</a></p>
+          <p><a href="#">-Created- (2)</a></p>
+          <p><a href="#">-Liked- (2)</a></p>
+          <p><a href="#">-Draft- (2)</a></p>
+          <p><a href="#">Interested Exams (5)</a></p>
+          <p><a href="#">Categories (4)</a></p>
+          <p><a href="#">Question Papers (1)</a></p>
         </div>
-        <div *ngIf="hasUserSignedIn == true">
-          Welcome {{userdata.name}}
-        </div>
     </div>
-    <div class="col-sm-2 sidenav">
+    <div class="col-lg-8 text-left">
+        <div *ngIf="!AuthService.userDetails">
+            Please login to use the Repository!
+            <button (click)="login()">login</button>
+          </div>
+          <div *ngIf="AuthService.user | async as user">
+
+            <router-outlet></router-outlet>
+          </div>
+
+
+    </div>
+    <div class="col-lg-2 sidenav">
       <div class="well">
         <p>ADS</p>
       </div>

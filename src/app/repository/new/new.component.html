@@ -1,7 +1,103 @@
-<div  class="questionBody">
-    <div [froalaEditor] [(froalaModel)]="myContent">Hello, Froala!</div>
+<ul class="nav nav-tabs">
+    <li class="nav-item">
+      <a  class="nav-link"  (click)="tabChanged('question')" >Question</a>
+    </li>
+    <li class="nav-item">
+      <a  class="nav-link"  (click)="tabChanged('options')" >Options</a>
+    </li>
+    <li class="nav-item">
+      <a  class="nav-link" (click)="tabChanged('answer')" >Answer</a>
+    </li>
+  </ul>
+  <div id="questionTab" *ngIf="selectedTab=='question'">
+      <div>
+          Question Type
+          <select [(ngModel)]="questionType">
+              <option value="VA">VA</option>
+              <option value="RC">RC</option>
+              <option value="DI">DI</option>
+              <option value="LR">LR</option>
+              <option value="QA">QA</option>
+              <option value="QA">70-486</option>
+            </select>
+        </div>
 
-    <input type="button" (click)="myFunction()"/>
+        <div>
+            Dificulty Level
+            <select [(ngModel)]="difficulty">
+                <option value="1">Easy</option>
+                <option value="2">Medium</option>
+                <option value="3">Difficult</option>
+              </select>
+          </div>
+    <h3>Enter you question here: </h3>
+    <app-ngx-editor id="question" [placeholder]="'Enter text here...'" [spellcheck]="true" height="200px" [(ngModel)]="question"></app-ngx-editor>
+    <!-- <app-ngx-editor [placeholder]="'Enter text here...'" [spellcheck]="true" [(ngModel)]="myContent"></app-ngx-editor> -->
 
 </div>
+
+
+  <div id="optionsTab" *ngIf="selectedTab=='options'">
+    <div style="margin:5px">
+      <b> Number of Options</b>
+       <select [(ngModel)]="numberOfOptions" (change)="onNumberOfOptionsChanged()">
+           <option value="2">2</option>
+           <option value="3">3</option>
+           <option value="4">4</option>
+           <option value="5">5</option>
+         </select>
+     </div>
+     <div style="margin:5px">
+       <b>Type of Options</b>
+         <select [(ngModel)]="options">
+             <option value="1">1 correct answer</option>
+             <option value="2">Multiple correct answers</option>
+           </select>
+       </div>
+   <table class="table table-responsive table-bordered">
+     <tr *ngFor="let opt of options">
+        <th>
+            <app-ngx-editor [placeholder]=opt [spellcheck]="true" height="100px" ></app-ngx-editor>
+
+          </th>
+     </tr>
+     <!-- <tr>
+       <th>1</th>
+       <th>
+     <app-ngx-editor [placeholder]="'Enter text here...'" [spellcheck]="true" height="100px" ></app-ngx-editor>
+
+       </th>
+     </tr>
+     <tr>
+         <th>2</th>
+       <th>
+     <app-ngx-editor [placeholder]="'Enter text here...'" [spellcheck]="true" height="100px" ></app-ngx-editor>
+
+       </th>
+       </tr>
+       <tr>
+           <th>3</th>
+       <th>
+     <app-ngx-editor [placeholder]="'Enter text here...'" [spellcheck]="true" height="100px" ></app-ngx-editor>
+
+       </th>
+         </tr>
+       <tr>
+         <th>4</th>
+       <th>
+     <app-ngx-editor [placeholder]="'Enter text here...'" [spellcheck]="true" height="100px" ></app-ngx-editor>
+
+       </th>
+
+       </tr> -->
+   </table>
+  </div>
+  <div id="answerTab" *ngIf="selectedTab=='answer'">
+    <p>
+      Correct answer: <input value="option4"/>
+  </p>
+      Explanation:
+      <app-ngx-editor [placeholder]="'Enter text here...'" [spellcheck]="true" height="200px" >Explanation here </app-ngx-editor>
+  </div>
+  <input type="button" value="Save" (click)="myFunction()"/>
 
