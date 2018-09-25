@@ -7,6 +7,7 @@ import { NewComponent } from './repository/new/new.component';
 import { HomeComponent } from './home/home.component';
 import { ContactComponent } from './contact/contact.component';
 import { AuthGuard } from './shared/auth-guard.service';
+import { TestComponent } from './test/test.component';
 
 const appRoutes: Routes = [
   { path: 'home', component: HomeComponent,
@@ -14,6 +15,7 @@ const appRoutes: Routes = [
     {path: '', component: DashboardComponent},
     {path: 'dashboard', component: DashboardComponent}
   , { path: 'new', component: NewComponent}
+  , { path: 'test', component: TestComponent}
     ]}
     // ,{path: 'question', component: QuestionComponent}
     // ,{path: 'options', component: OptionsComponent}

@@ -1,7 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule  } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 
 import { AppComponent } from './app.component';
@@ -40,6 +40,7 @@ import {
 } from 'angular-6-social-login';
 import { ContactComponent } from './contact/contact.component';
 import { AuthGuard } from './shared/auth-guard.service';
+import { TestComponent } from './test/test.component';
 
 
 
@@ -70,6 +71,7 @@ import { AuthGuard } from './shared/auth-guard.service';
     HomeComponent,
     SigninComponent,
     ContactComponent,
+    TestComponent
   ],
   imports: [
     BrowserModule
@@ -82,6 +84,7 @@ import { AuthGuard } from './shared/auth-guard.service';
     , StorageServiceModule
     , AngularFireAuthModule
     , FormsModule
+    , ReactiveFormsModule
     , NgxEditorModule
     , HttpClientModule
   ],
