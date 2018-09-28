@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Post } from '../../shared/module/post';
 import { BlogService } from '../../shared/blog.service';
+import { QuestionsService } from '../../shared/questions.service';
+import { Question } from '../../shared/module/question';
 
 @Component({
   selector: 'app-dashboard',
@@ -10,11 +12,15 @@ import { BlogService } from '../../shared/blog.service';
 })
 export class DashboardComponent implements OnInit {
 
-  public posts: Observable<Post[][]>;
+  public questions: Observable<Question[][]>;
 
-  constructor(private service:BlogService ) {
-      this.posts = this.service.getAllPosts().valueChanges();
-  }
+  // constructor(private service: BlogService ) {
+  //     this.posts = this.service.getAllPosts().valueChanges();
+  // }
+
+  constructor(private service: QuestionsService ) {
+    this.questions = this.service.getAllQuestions();
+}
 
   ngOnInit() {
   }

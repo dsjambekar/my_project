@@ -29,7 +29,7 @@ import { SigninComponent } from './signin/signin.component';
 import { StorageServiceModule} from 'angular-webstorage-service';
 import { SESSION_STORAGE, WebStorageService} from 'angular-webstorage-service';
 import { NgxEditorModule } from 'ngx-editor';
-
+import { QuillModule } from 'ngx-quill';
 import { AuthService } from './shared/auth.service';
 
 import {
@@ -86,6 +86,7 @@ import { TestComponent } from './test/test.component';
     , FormsModule
     , ReactiveFormsModule
     , NgxEditorModule
+    , QuillModule
     , HttpClientModule
   ],
   providers: [

@@ -7,6 +7,8 @@ import { ChangeDetectorRef } from '@angular/core';
 import { QuestionsService } from '../../shared/questions.service';
 
 import { FormBuilder, FormGroup,  FormArray,  Validators, FormControl } from '@angular/forms';
+import { Question } from '../../shared/module/question';
+import { AuthService } from '../../shared/auth.service';
 
 declare var myExtObject: any;
 declare var webGlObject: any;
@@ -21,61 +23,99 @@ export class NewComponent implements OnInit {
   registerForm: FormGroup;
   submitted = false;
 
-  public questionType = 'QA';
-  public question = '';
-  public difficulty = 1;
+  public _question: Question;
+  // public questionType = 'QA';
+  // public question = '';
+  // public difficulty = 1;
   public numberOfOptions = 4;
-  public options: any;
-  public optionType = 1;
-  public answer: any;
-  public explanation: any;
+  // public options: any;
+  // public optionType = '';
+  // public answer: any;
+  // public explanation: any;
   public selectedTab = 'question';
+  public categoryList: string[];
+  public difficultyList: string[];
+  public optionTypeList: string[];
 
   constructor(private route: ActivatedRoute, private service: BlogService, private ref: ChangeDetectorRef,
-    private questionService: QuestionsService, private formBuilder: FormBuilder) {
+    private questionService: QuestionsService, private formBuilder: FormBuilder, public AuthService: AuthService) {
   }
 
   ngOnInit() {
 
+    this.categoryList = ['VA', 'QA', 'LR', 'DI'];
+    this.difficultyList = ['Easy', 'Medium', 'Hard'];
+    this.optionTypeList = ['Single', 'Multiple'];
+
     this.registerForm = this.formBuilder.group({
-      firstName: ['', Validators.required],
-      lastName: ['', Validators.required],
-      fQuestion: ['', Validators.required],
-      fCorrectAnswer: ['', Validators.required],
-      fExplanation: ['', Validators.required],
-      aliases: this.formBuilder.array([
-        this.formBuilder.control('', Validators.required),
-        this.formBuilder.control('', Validators.required),
-        this.formBuilder.control('', Validators.required),
-        this.formBuilder.control('', Validators.required)
-      ])
+      question_body: ['', Validators.required],
+      category: ['QA'],
+      difficulty: ['Easy'],
+      option_type: ['Single'],
+      explanation_body: ['', Validators.required],
+      // options: this.formBuilder.array([
+      //   this.formBuilder.control('', Validators.required),
+      //   this.formBuilder.control('', Validators.required),
+      //   this.formBuilder.control('', Validators.required),
+      //   this.formBuilder.control('', Validators.required)
+      // ])
+      options: this.formBuilder.array([
+        this.initOption(),
+        this.initOption(),
+        this.initOption(),
+        this.initOption()
+    ])
     });
 
-    this.options = [
-      'Sentence 1',
-      'Sentence 2',
-      'Sentence 3',
-      'Sentence 4 ',
-    ];
+
   }
 
   get f() { return this.registerForm.controls; }
 
-  get aliases() {
-    return this.registerForm.get('aliases') as FormArray;
+  get options() {
+    return this.registerForm.get('options') as FormArray;
   }
 
-  addAlias() {
-    this.aliases.push(this.formBuilder.control('', Validators.required));
+
+  addOptions() {
+    // this.options.push(this.formBuilder.control('', Validators.required));
+
+     // add address to the list
+     const control = <FormArray>this.registerForm.controls['options'];
+     control.push(this.initOption());
   }
+
+  initOption() {
+    // initialize our address
+    return this.formBuilder.group({
+      option_body: ['', Validators.required],
+      is_correct: [true]
+    });
+}
 
   onSubmit() {
     this.submitted = true;
 
     // stop here if form is invalid
     if (this.registerForm.invalid) {
+      alert('Please enter all the values.');
       return;
     }
+
+     this._question = this.registerForm.value;
+
+     console.log(this.AuthService.getUser());
+
+
+     this.AuthService.getUser().subscribe(data => {
+      this._question.created_by = data.uid;
+    });
+
+    this._question.created_at = Date.now();
+
+    console.log(this._question);
+
+    this.questionService.addNewQuestion(this._question);
 
     alert('SUCCESS!! :-)');
   }
@@ -92,17 +132,17 @@ export class NewComponent implements OnInit {
   }
 
   onNumberOfOptionsChanged() {
-    this.options = [];
+    // this.options = [];
 
     for (let i = 0; i < 5; i++) {
-      this.aliases.removeAt(0);
+      this.options.removeAt(0);
     }
 
     for (let i = 0; i < this.numberOfOptions; i++) {
-      let option = '';
-      this.options.push(option);
+      // let option = '';
+      // this.options.push(option);
       // this.registerForm.addControl(i.toString(), new FormControl('', Validators.required));
-      this.addAlias();
+      this.addOptions();
     }
   }
 

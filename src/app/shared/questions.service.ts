@@ -3,6 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 
 import { AngularFireDatabase, AngularFireList } from 'angularfire2/database';
+import { Question } from './module/question';
 
 
 
@@ -23,8 +24,8 @@ export class QuestionsService implements OnInit {
     return this.af.list('/questions').valueChanges();
   }
 
-  addNewQuestion(value: string, type: string): void {
-    this.af.list('/questions').push({text: value, type: type});
+  addNewQuestion(qustion:Question): void {
+    this.af.list('/questions').push(qustion);
 
   }
   // deleteQuestion(todo: any): void {

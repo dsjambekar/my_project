@@ -5,3 +5,10 @@
 .invalid-feedback{
   color: red;
 }
+
+.tab{
+  border-width: 1px;
+  border-collapse: gray;
+  border-style:ridge;
+  padding: 10px;
+}

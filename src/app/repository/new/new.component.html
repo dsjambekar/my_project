@@ -1,100 +1,87 @@
-<ul class="nav nav-tabs">
-  <li class="nav-item">
-    <a class="nav-link" (click)="tabChanged('question')">Question</a>
-  </li>
-  <li class="nav-item">
-    <a class="nav-link" (click)="tabChanged('options')">Options</a>
-  </li>
-  <li class="nav-item">
-    <a class="nav-link" (click)="tabChanged('answer')">Answer</a>
-  </li>
-</ul>
 <div class="tab-content">
-  <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+  <form [formGroup]="registerForm" novalidate (ngSubmit)="onSubmit()">
 
-    <div id="questionTab" *ngIf="selectedTab=='question'">
-      <div class="form-group">
-        Question Type
-        <select [(ngModel)]="questionType" [ngModelOptions]="{standalone: true}" class="form-control">
-          <option value="VA">VA</option>
-          <option value="RC">RC</option>
-          <option value="DI">DI</option>
-          <option value="LR">LR</option>
-          <option value="QA">QA</option>
-          <option value="QA">70-486</option>
-        </select>
+    <div class="tab">
+      <a href="#question" class="btn btn-outline-primary btn-link" data-toggle="collapse">Question</a>
+      <div id="question" class="collapse">
+        <div class="form-group">
+          Question Type
+          <select id="selcategoryect" formControlName="category" class="form-control">
+            <option *ngFor="let c of categoryList" [value]="c"> {{c}}
+            </option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          Dificulty Level
+          <select id="difficulty" formControlName="difficulty" class="form-control">
+            <option *ngFor="let d of difficultyList" [value]="d"> {{d}}
+            </option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <h3>Enter you question here: </h3>
+          <!-- <app-ngx-editor id="question" imageEndPoint="/assets"  formControlName="question_body" [ngClass]="{ 'is-invalid': submitted && f.question_body.errors }"
+            [placeholder]="'Enter text here...'" [spellcheck]="true" height="200px" ></app-ngx-editor> -->
+            <quill-editor formControlName="question_body"></quill-editor>
+            <div *ngIf="submitted && f.question_body.errors" class="invalid-feedback">
+            <div *ngIf="f.question_body.errors.required">Question is required</div>
+          </div>
+        </div>
       </div>
 
-      <div class="form-group">
-        Dificulty Level
-        <select [(ngModel)]="difficulty" [ngModelOptions]="{standalone: true}" class="form-control">
-          <option value="1">Easy</option>
-          <option value="2">Medium</option>
-          <option value="3">Difficult</option>
-        </select>
-      </div>
+    </div>
 
-      <div class="form-group">
-        <h3>Enter you question here: </h3>
-        <app-ngx-editor id="question" formControlName="fQuestion" [ngClass]="{ 'is-invalid': submitted && f.fQuestion.errors }"
-          [placeholder]="'Enter text here...'" [spellcheck]="true" height="200px" [(ngModel)]="question"></app-ngx-editor>
-        <div *ngIf="submitted && f.fQuestion.errors" class="invalid-feedback">
-          <div *ngIf="f.fQuestion.errors.required">Question is required</div>
+    <div class="tab">
+      <a href="#options" class="btn btn-link" data-toggle="collapse">Options</a>
+      <div id="options" class="collapse">
+        <div style="margin:5px">
+          <b> Number of Options</b>
+          <select [(ngModel)]="numberOfOptions" [ngModelOptions]="{standalone: true}" (change)="onNumberOfOptionsChanged()"
+            class="form-control">
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+            <option value="5">5</option>
+          </select>
+        </div>
+        <div style="margin:5px" class="form-group">
+          <b>Type of Options</b>
+          <select id="option_type" formControlName="option_type" class="form-control">
+            <option *ngFor="let o of optionTypeList" [value]="o"> {{o}}
+            </option>
+          </select>
+        </div>
+        <div formArrayName="options">
+          <table class="table table-responsive table-bordered">
+            <tr *ngFor="let address of options.controls;let i = index">
+              <td [formGroupName]="i">
+                <input type="checkBox" formControlName="is_correct" />
+                <app-ngx-editor formControlName="option_body" [spellcheck]="true" height="100px" [ngClass]="{ 'is-invalid': submitted && options.controls[i].errors }"></app-ngx-editor>
+                <div *ngIf="submitted && options.controls[i].controls.option_body.errors" class="invalid-feedback">
+                  <div *ngIf="options.controls[i].controls.option_body.errors.required">Please enter some text.</div>
+                </div>
+              </td>
+            </tr>
+          </table>
         </div>
       </div>
     </div>
 
+    <div class="tab">
+      <a href="#answer" class="btn btn-link" data-toggle="collapse">Answer</a>
 
-    <div id="optionsTab" *ngIf="selectedTab=='options'">
-      <div style="margin:5px">
-        <b> Number of Options</b>
-        <select [(ngModel)]="numberOfOptions" [ngModelOptions]="{standalone: true}" (change)="onNumberOfOptionsChanged()"
-          class="form-control">
-          <option value="2">2</option>
-          <option value="3">3</option>
-          <option value="4">4</option>
-          <option value="5">5</option>
-        </select>
-      </div>
-      <div style="margin:5px" class="form-group">
-        <b>Type of Options</b>
-        <select [(ngModel)]="optionType" [ngModelOptions]="{standalone: true}" class="form-control">
-          <option value="1">1 correct answer</option>
-          <option value="2">Multiple correct answers</option>
-        </select>
-      </div>
-      <div formArrayName="aliases">
-        <table class="table table-responsive table-bordered">
-          <tr *ngFor="let address of aliases.controls;let i = index">
-            <th>
-              <app-ngx-editor [(ngModel)]="options[i]" formControlName="{{i}}" [spellcheck]="true" height="100px"  [ngClass]="{ 'is-invalid': submitted && f.fQuestion.errors }"></app-ngx-editor>
-              <div *ngIf="submitted && f.aliases.controls[i].errors" class="invalid-feedback">
-                  <div *ngIf="f.aliases.controls[i].errors.required">Please enter some text.</div>
-                </div>
-            </th>
-          </tr>
-        </table>
-      </div>
-
-    </div>
-    <div id="answerTab" *ngIf="selectedTab=='answer'">
-      <div class="form-group">
-        Correct answer: <input value="" class="form-control" formControlName="fCorrectAnswer" />
-        <div *ngIf="submitted && f.fCorrectAnswer.errors" class="invalid-feedback">
-            <div *ngIf="f.fCorrectAnswer.errors.required">Please enter some text.</div>
-          </div>
-      </div>
-      <div class="form-group">
+      <div id="answer" class="form-group collapse">
         Explanation:
-        <app-ngx-editor [placeholder]="'Enter text here...'" formControlName="fExplanation" [spellcheck]="true"  [ngClass]="{ 'is-invalid': submitted && f.fQuestion.errors }" height="200px">Explanation here
+        <app-ngx-editor [placeholder]="'Enter text here...'" formControlName="explanation_body" [spellcheck]="true"
+          [ngClass]="{ 'is-invalid': submitted && f.explanation_body.errors }" height="200px">Explanation here
         </app-ngx-editor>
-        <div *ngIf="submitted && f.fExplanation.errors" class="invalid-feedback">
-            <div *ngIf="f.fExplanation.errors.required">Please enter some text.</div>
-          </div>
+        <div *ngIf="submitted && f.explanation_body.errors" class="invalid-feedback">
+          <div *ngIf="f.explanation_body.errors.required">Please enter some text.</div>
+        </div>
       </div>
-
     </div>
-    <!-- <input type="button" value="Save" (click)="myFunction()" /> -->
     <div class="form-group">
       <button class="btn btn-primary">Save</button>
     </div>
