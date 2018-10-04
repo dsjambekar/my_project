@@ -4,6 +4,9 @@ import { Post } from '../../shared/module/post';
 import { BlogService } from '../../shared/blog.service';
 import { QuestionsService } from '../../shared/questions.service';
 import { Question } from '../../shared/module/question';
+import { AngularFireList } from 'angularfire2/database';
+
+import { map } from 'rxjs/operators';
 
 @Component({
   selector: 'app-dashboard',
@@ -12,17 +15,28 @@ import { Question } from '../../shared/module/question';
 })
 export class DashboardComponent implements OnInit {
 
-  public questions: Observable<Question[][]>;
-
-  // constructor(private service: BlogService ) {
-  //     this.posts = this.service.getAllPosts().valueChanges();
-  // }
+  public questions: any;
 
   constructor(private service: QuestionsService ) {
-    this.questions = this.service.getAllQuestions();
 }
 
   ngOnInit() {
+    this.getQuestionsList();
+  }
+
+  getQuestionsList() {
+    // Use snapshotChanges().map() to store the key
+    this.service.getAllQuestions().snapshotChanges().pipe(
+      map(changes =>
+        changes.map(c => ({ key: c.payload.key, ...c.payload.val() }))
+      )
+    ).subscribe(questions => {
+      this.questions = questions;
+    });
+  }
+
+  deleteQuestion(key: string) {
+    this.service.deleteQuestion(key);
   }
 
 }

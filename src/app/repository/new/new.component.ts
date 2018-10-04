@@ -1,17 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { Post } from '../../shared/module/post';
-import { BlogService } from '../../shared/blog.service';
-import { Observable } from 'rxjs';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { ChangeDetectorRef } from '@angular/core';
 import { QuestionsService } from '../../shared/questions.service';
 
-import { FormBuilder, FormGroup,  FormArray,  Validators, FormControl } from '@angular/forms';
-import { Question } from '../../shared/module/question';
+import { FormBuilder, FormGroup, FormArray, Validators, FormControl } from '@angular/forms';
 import { AuthService } from '../../shared/auth.service';
-
-declare var myExtObject: any;
-declare var webGlObject: any;
 
 @Component({
   selector: 'app-new',
@@ -23,34 +16,31 @@ export class NewComponent implements OnInit {
   registerForm: FormGroup;
   submitted = false;
 
-  public _question: Question;
-  // public questionType = 'QA';
-  // public question = '';
-  // public difficulty = 1;
+  public _question: any;
+  public options_required = true;
+
   public numberOfOptions = 4;
-  // public options: any;
-  // public optionType = '';
-  // public answer: any;
-  // public explanation: any;
+
   public selectedTab = 'question';
   public categoryList: string[];
   public difficultyList: string[];
   public optionTypeList: string[];
 
-  constructor(private route: ActivatedRoute, private service: BlogService, private ref: ChangeDetectorRef,
+  constructor(private route: ActivatedRoute,
+    private router: Router, private service: QuestionsService, private ref: ChangeDetectorRef,
     private questionService: QuestionsService, private formBuilder: FormBuilder, public AuthService: AuthService) {
   }
 
   ngOnInit() {
 
-    this.categoryList = ['VA', 'QA', 'LR', 'DI'];
-    this.difficultyList = ['Easy', 'Medium', 'Hard'];
-    this.optionTypeList = ['Single', 'Multiple'];
-
     this.registerForm = this.formBuilder.group({
       question_body: ['', Validators.required],
-      category: ['QA'],
-      difficulty: ['Easy'],
+      category: '',
+      difficulty: '',
+      is_public: false,
+      options_required: true,
+      created_at: '',
+      created_by: '',
       option_type: ['Single'],
       explanation_body: ['', Validators.required],
       // options: this.formBuilder.array([
@@ -64,10 +54,18 @@ export class NewComponent implements OnInit {
         this.initOption(),
         this.initOption(),
         this.initOption()
-    ])
+      ])
     });
 
+    this.service.getQuestionByKey(this.route.snapshot.paramMap.get('key'))
+      .subscribe(data => {
+        this.registerForm.setValue(data);
+      });
 
+    console.log(this._question);
+    this.categoryList = ['VA', 'QA', 'LR', 'DI'];
+    this.difficultyList = ['Easy', 'Medium', 'Hard'];
+    this.optionTypeList = ['Single', 'Multiple'];
   }
 
   get f() { return this.registerForm.controls; }
@@ -80,9 +78,9 @@ export class NewComponent implements OnInit {
   addOptions() {
     // this.options.push(this.formBuilder.control('', Validators.required));
 
-     // add address to the list
-     const control = <FormArray>this.registerForm.controls['options'];
-     control.push(this.initOption());
+    // add address to the list
+    const control = <FormArray>this.registerForm.controls['options'];
+    control.push(this.initOption());
   }
 
   initOption() {
@@ -91,7 +89,7 @@ export class NewComponent implements OnInit {
       option_body: ['', Validators.required],
       is_correct: [true]
     });
-}
+  }
 
   onSubmit() {
     this.submitted = true;
@@ -102,29 +100,30 @@ export class NewComponent implements OnInit {
       return;
     }
 
-     this._question = this.registerForm.value;
-
-     console.log(this.AuthService.getUser());
+    this._question = this.registerForm.value;
 
 
-     this.AuthService.getUser().subscribe(data => {
+
+    this.AuthService.getUser().subscribe(data => {
       this._question.created_by = data.uid;
     });
 
     this._question.created_at = Date.now();
-
-    console.log(this._question);
+    this._question.created_by = 'some user id';
 
     this.questionService.addNewQuestion(this._question);
 
     alert('SUCCESS!! :-)');
   }
 
-  myFunction() {
-    // console.log(this.myContent);
-    // this.service.updatePostBySlug(this.slug, this.myContent);
-    // this.questionService.addNewQuestion(this.myContent, this.questionType);
-
+  toggleOptionsRequired = () => {
+    this.options_required = !this.options_required;
+    if (!this.options_required) {
+      this.numberOfOptions = 0;
+    } else {
+      this.numberOfOptions = 4;
+    }
+    this.onNumberOfOptionsChanged();
   }
 
   tabChanged(tabName: string) {

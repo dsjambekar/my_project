@@ -9,7 +9,6 @@ import { AppRoutingModule } from './app-routing.module';
 
 import { RepositoryComponent } from './repository/repository.component';
 import { LoginComponent } from './login/login.component';
-import { PostsContainerComponent } from './posts-container/posts-container.component';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 import { AngularFireModule } from 'angularfire2';
 import { AngularFirestoreModule } from 'angularfire2/firestore';
@@ -18,7 +17,6 @@ import { AngularFireDatabaseModule } from 'angularfire2/database';
 
 import { environment } from '../environments/environment.prod';
 
-import { PostPageComponent } from './post-page/post-page.component';
 import { DashboardComponent } from './repository/dashboard/dashboard.component';
 import { NewComponent } from './repository/new/new.component';
 import { QuestionPaperComponent } from './repository/question-paper/question-paper.component';
@@ -41,6 +39,9 @@ import {
 import { ContactComponent } from './contact/contact.component';
 import { AuthGuard } from './shared/auth-guard.service';
 import { TestComponent } from './test/test.component';
+import { QuestionComponent } from './repository/question/question.component';
+import { QuestionDetailsComponent } from './question-details/question-details.component';
+import { QuestionsListComponent } from './questions-list/questions-list.component';
 
 
 
@@ -60,18 +61,19 @@ import { TestComponent } from './test/test.component';
 @NgModule({
   declarations: [
     AppComponent,
-    PostsContainerComponent,
     RepositoryComponent,
     LoginComponent,
     PageNotFoundComponent,
-    PostPageComponent,
     DashboardComponent,
     NewComponent,
     QuestionPaperComponent,
     HomeComponent,
     SigninComponent,
     ContactComponent,
-    TestComponent
+    TestComponent,
+    QuestionComponent,
+    QuestionDetailsComponent,
+    QuestionsListComponent
   ],
   imports: [
     BrowserModule

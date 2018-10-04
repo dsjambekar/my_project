@@ -1,0 +1,31 @@
+<div class="question-details">
+
+  <div style="padding:10px;"><button style="vertical-align :right;" class="btn btn-primary">{{question.difficulty}}</button>
+    <button class="btn btn-primary">{{question.category}}</button>
+    <button *ngIf="question.is_public" class="btn btn-primary">Public</button>
+
+     <a [href]="'/home/new/' + question.key">Edit</a>
+     <a [href]="'/questions/' + question.key">View</a>
+     <button class="button is-small btn-danger" (click)='deleteQuestion(question.key)'>X</button>
+    </div>
+  <div [innerHTML]="question.question_body"></div>
+
+  <button data-toggle="collapse" [attr.data-target]="'#' + question.key" (click)="toggleText()" >{{showMoreText}}</button>
+  <div id="{{question.key}}" class="collapse">
+    <div>
+      <h3>Options</h3>
+        <table class="table table-responsive">
+            <tr *ngFor="let option of question.options;let i = index">
+          <td>({{i+1}})</td>
+              <td>
+                <div [innerHTML]="option.option_body"></div>
+                <div *ngIf="option.is_correct">Correct Answer</div>
+
+              </td>
+            </tr>
+          </table>
+    </div>
+    <h3>Explanation</h3>
+    <div [innerHTML]="question.explanation_body"></div>
+    </div>
+</div>

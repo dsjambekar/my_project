@@ -1,19 +1,25 @@
 <!-- <a href="/repo/new">Add New Question</a> -->
+
 <table class="table table-responsive table-bordered">
     <thead>
       <tr>
         <th>Date</th>
-        <th>Question</th>
-        <th>Category</th>
-        <th>Difficulty</th>
+        <th>Question
+
       </tr>
     </thead>
     <tbody>
-      <tr *ngFor="let question of questions|async">
-        <td>{{question.created_on}}</td>
-        <td> <a [href]="'/questions/' + question.slug"><div [innerHTML]="question.question_body"></div></a></td>
-        <td>{{question.is_page}}</td>
-        <td> <a [href]="'/repo/new/' + question.slug">Edit</a></td>
+      <tr *ngFor="let question of questions">
+        <!-- <td>{{question|json}}</td> -->
+        <td>{{question.created_at | date}}</td>
+        <td> <a [href]="'/questions/' + question.key"><div [innerHTML]="question.question_body"></div></a>
+      <button class="btn btn-primary">{{question.difficulty}}</button>
+        <button class="btn btn-primary">{{question.category}}</button>
+        <button *ngIf="question.is_public" class="btn btn-primary">Public</button>
+
+         <a [href]="'/home/new/' + question.key">Edit</a>
+         <a [href]="'/questions/' + question.key">View</a>
+         <button class="button is-small btn-danger" (click)='deleteQuestion(question.key)'>X</button></td>
       </tr>
     </tbody>
   </table>

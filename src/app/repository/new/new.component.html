@@ -21,11 +21,20 @@
         </div>
 
         <div class="form-group">
+          Is Public
+          <input type="checkbox" formControlName="is_public">
+        </div>
+
+        <div class="form-group">
+          Options required
+          <input type="checkbox" (change)="toggleOptionsRequired()" formControlName="options_required">
+        </div>
+
+        <div class="form-group">
           <h3>Enter you question here: </h3>
-          <!-- <app-ngx-editor id="question" imageEndPoint="/assets"  formControlName="question_body" [ngClass]="{ 'is-invalid': submitted && f.question_body.errors }"
-            [placeholder]="'Enter text here...'" [spellcheck]="true" height="200px" ></app-ngx-editor> -->
-            <quill-editor formControlName="question_body"></quill-editor>
-            <div *ngIf="submitted && f.question_body.errors" class="invalid-feedback">
+          <quill-editor formControlName="question_body" [modules]="{toolbar: [[ { 'list': 'ordered'}, { 'list': 'bullet' },
+          { 'script': 'sub'}, { 'script': 'super' },'image',{ 'align': [] }]]}"></quill-editor>
+          <div *ngIf="submitted && f.question_body.errors" class="invalid-feedback">
             <div *ngIf="f.question_body.errors.required">Question is required</div>
           </div>
         </div>
@@ -33,40 +42,41 @@
 
     </div>
 
-    <div class="tab">
+    <div class="tab" *ngIf="options_required">
       <a href="#options" class="btn btn-link" data-toggle="collapse">Options</a>
-      <div id="options" class="collapse">
-        <div style="margin:5px">
-          <b> Number of Options</b>
-          <select [(ngModel)]="numberOfOptions" [ngModelOptions]="{standalone: true}" (change)="onNumberOfOptionsChanged()"
-            class="form-control">
-            <option value="2">2</option>
-            <option value="3">3</option>
-            <option value="4">4</option>
-            <option value="5">5</option>
-          </select>
+        <div id="options" class="collapse">
+          <div style="margin:5px">
+            <b> Number of Options</b>
+            <select [(ngModel)]="numberOfOptions" [ngModelOptions]="{standalone: true}" (change)="onNumberOfOptionsChanged()"
+              class="form-control">
+              <option value="2">2</option>
+              <option value="3">3</option>
+              <option value="4">4</option>
+              <option value="5">5</option>
+            </select>
+          </div>
+          <div style="margin:5px" class="form-group">
+            <b>Type of Options</b>
+            <select id="option_type" formControlName="option_type" class="form-control">
+              <option *ngFor="let o of optionTypeList" [value]="o"> {{o}}
+              </option>
+            </select>
+          </div>
+          <div formArrayName="options">
+            <table class="table table-responsive table-bordered">
+              <tr *ngFor="let address of options.controls;let i = index">
+                <td [formGroupName]="i">
+                  <input type="checkBox" formControlName="is_correct" />
+                  <!-- <app-ngx-editor formControlName="option_body" [spellcheck]="true" height="100px" [ngClass]="{ 'is-invalid': submitted && options.controls[i].errors }"></app-ngx-editor> -->
+                  <quill-editor formControlName="option_body"></quill-editor>
+                  <div *ngIf="submitted && options.controls[i].controls.option_body.errors" class="invalid-feedback">
+                    <div *ngIf="options.controls[i].controls.option_body.errors.required">Please enter some text.</div>
+                  </div>
+                </td>
+              </tr>
+            </table>
+          </div>
         </div>
-        <div style="margin:5px" class="form-group">
-          <b>Type of Options</b>
-          <select id="option_type" formControlName="option_type" class="form-control">
-            <option *ngFor="let o of optionTypeList" [value]="o"> {{o}}
-            </option>
-          </select>
-        </div>
-        <div formArrayName="options">
-          <table class="table table-responsive table-bordered">
-            <tr *ngFor="let address of options.controls;let i = index">
-              <td [formGroupName]="i">
-                <input type="checkBox" formControlName="is_correct" />
-                <app-ngx-editor formControlName="option_body" [spellcheck]="true" height="100px" [ngClass]="{ 'is-invalid': submitted && options.controls[i].errors }"></app-ngx-editor>
-                <div *ngIf="submitted && options.controls[i].controls.option_body.errors" class="invalid-feedback">
-                  <div *ngIf="options.controls[i].controls.option_body.errors.required">Please enter some text.</div>
-                </div>
-              </td>
-            </tr>
-          </table>
-        </div>
-      </div>
     </div>
 
     <div class="tab">
@@ -74,10 +84,11 @@
 
       <div id="answer" class="form-group collapse">
         Explanation:
-        <app-ngx-editor [placeholder]="'Enter text here...'" formControlName="explanation_body" [spellcheck]="true"
+        <!-- <app-ngx-editor [placeholder]="'Enter text here...'" formControlName="explanation_body" [spellcheck]="true"
           [ngClass]="{ 'is-invalid': submitted && f.explanation_body.errors }" height="200px">Explanation here
-        </app-ngx-editor>
-        <div *ngIf="submitted && f.explanation_body.errors" class="invalid-feedback">
+        </app-ngx-editor> -->
+        <quill-editor formControlName="explanation_body"></quill-editor>
+        <div *ngIf="submitted && options_required && f.explanation_body.errors" class="invalid-feedback">
           <div *ngIf="f.explanation_body.errors.required">Please enter some text.</div>
         </div>
       </div>
