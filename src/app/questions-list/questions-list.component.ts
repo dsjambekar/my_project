@@ -1,6 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { QuestionsService } from '../shared/questions.service';
 import { map } from 'rxjs/operators';
+import { AuthService } from '../shared/auth.service';
+import { AngularFireList } from 'angularfire2/database';
+import { Question } from '../shared/module/question';
 
 @Component({
   selector: 'app-questions-list',
@@ -9,26 +12,20 @@ import { map } from 'rxjs/operators';
 })
 export class QuestionsListComponent implements OnInit {
 
-  questions: any;
+  @Input() questions: any;
+  @Input() allowEdit: boolean;
+  user: any;
 
-  constructor(private questionService: QuestionsService) { }
+  constructor(private questionService: QuestionsService, private authService: AuthService) {
+  }
 
   ngOnInit() {
-    this.getQuestionsList();
+
+    this.authService.getUser().subscribe(
+      user => {
+        this.user = user;
+      }
+    );
   }
 
-  getQuestionsList() {
-    // Use snapshotChanges().map() to store the key
-    this.questionService.getAllQuestions().snapshotChanges().pipe(
-      map(changes =>
-        changes.map(c => ({ key: c.payload.key, ...c.payload.val() }))
-      )
-    ).subscribe(questions => {
-      this.questions = questions;
-    });
-  }
-
-  // deleteAllQuestions() {
-  //   this.questionService.deleteAll();
-  // }
 }

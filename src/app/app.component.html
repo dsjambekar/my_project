@@ -12,17 +12,12 @@
     <div class="collapse navbar-collapse" id="myNavbar">
       <ul class="nav navbar-nav">
         <li><a routerLink="/home">Home</a></li>
+        <li><a routerLink="/repo">Repo</a></li>
         <!-- <li><a href="#">About</a></li> -->
         <!-- <li><a href="#">Projects</a></li> -->
         <li>  <a routerLink="/contact">Contact</a></li>
       </ul>
-      <ul class="nav navbar-nav navbar-right">
-        <li>
-          <!-- <app-signin (signedInOrOut) = "checkIfUserSignedIn($event)" ></app-signin> -->
-          <app-login (loggedIn)="onLoginChange($event)"></app-login>
 
-        </li>
-      </ul>
     </div>
   </div>
 </nav>
@@ -31,10 +26,8 @@
   <div class="row content">
 
     <div class="col-lg-2 sidenav">
-      <i class="fa fa-american-sign-language-interpreting fa-5x" aria-hidden="true"> </i>
         <div *ngIf="AuthService.user | async as user">
             <div>{{user.displayName}} </div> <img [src]="user.photoURL" style="height:75px;width:75px">
-
           <p><a href="#">Questions (20)</a></p>
           <p><a href="#">-Created- (2)</a></p>
           <p><a href="#">-Liked- (2)</a></p>
@@ -43,6 +36,8 @@
           <p><a href="#">Categories (4)</a></p>
           <p><a href="#">Question Papers (1)</a></p>
         </div>
+        <app-login (loggedIn)="onLoginChange($event)"></app-login>
+
     </div>
     <div class="col-lg-8 text-left">
         <div *ngIf="!AuthService.userDetails">

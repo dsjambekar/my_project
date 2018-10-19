@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { QuestionsService } from '../shared/questions.service';
 import { Question } from '../shared/module/question';
@@ -12,6 +12,8 @@ export class QuestionDetailsComponent implements OnInit {
 
   showMoreText = 'Show more..';
   @Input() question: Question;
+  @Input() allowEdit: boolean;
+  @Output() viewToggled = new EventEmitter<boolean>();
 
   constructor(private route: ActivatedRoute, private service: QuestionsService) {
   }
@@ -25,5 +27,9 @@ export class QuestionDetailsComponent implements OnInit {
     } else {
       this.showMoreText = 'Show more..';
     }
+  }
+
+  toggleView() {
+    this.viewToggled.emit(true);
   }
 }

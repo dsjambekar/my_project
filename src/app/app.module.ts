@@ -7,7 +7,6 @@ import { HttpClientModule } from '@angular/common/http';
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 
-import { RepositoryComponent } from './repository/repository.component';
 import { LoginComponent } from './login/login.component';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 import { AngularFireModule } from 'angularfire2';
@@ -17,15 +16,10 @@ import { AngularFireDatabaseModule } from 'angularfire2/database';
 
 import { environment } from '../environments/environment.prod';
 
-import { DashboardComponent } from './repository/dashboard/dashboard.component';
-import { NewComponent } from './repository/new/new.component';
-import { QuestionPaperComponent } from './repository/question-paper/question-paper.component';
-
 import { FroalaEditorModule, FroalaViewModule } from 'angular-froala-wysiwyg';
 import { HomeComponent } from './home/home.component';
 import { SigninComponent } from './signin/signin.component';
 import { StorageServiceModule} from 'angular-webstorage-service';
-import { SESSION_STORAGE, WebStorageService} from 'angular-webstorage-service';
 import { NgxEditorModule } from 'ngx-editor';
 import { QuillModule } from 'ngx-quill';
 import { AuthService } from './shared/auth.service';
@@ -39,9 +33,13 @@ import {
 import { ContactComponent } from './contact/contact.component';
 import { AuthGuard } from './shared/auth-guard.service';
 import { TestComponent } from './test/test.component';
-import { QuestionComponent } from './repository/question/question.component';
 import { QuestionDetailsComponent } from './question-details/question-details.component';
 import { QuestionsListComponent } from './questions-list/questions-list.component';
+import { ChildTestComponent } from './child-test/child-test.component';
+import { RepoComponent } from './repo/repo.component';
+import { NewQuestionComponent } from './new-question/new-question.component';
+import { EditQuestionComponent } from './edit-question/edit-question.component';
+import { QuestionComponent } from './question/question.component';
 
 
 
@@ -61,19 +59,19 @@ import { QuestionsListComponent } from './questions-list/questions-list.componen
 @NgModule({
   declarations: [
     AppComponent,
-    RepositoryComponent,
     LoginComponent,
     PageNotFoundComponent,
-    DashboardComponent,
-    NewComponent,
-    QuestionPaperComponent,
     HomeComponent,
     SigninComponent,
     ContactComponent,
     TestComponent,
-    QuestionComponent,
     QuestionDetailsComponent,
-    QuestionsListComponent
+    QuestionsListComponent,
+    ChildTestComponent,
+    RepoComponent,
+    NewQuestionComponent,
+    EditQuestionComponent,
+    QuestionComponent
   ],
   imports: [
     BrowserModule

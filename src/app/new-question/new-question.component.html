@@ -68,7 +68,8 @@
                 <td [formGroupName]="i">
                   <input type="checkBox" formControlName="is_correct" />
                   <!-- <app-ngx-editor formControlName="option_body" [spellcheck]="true" height="100px" [ngClass]="{ 'is-invalid': submitted && options.controls[i].errors }"></app-ngx-editor> -->
-                  <quill-editor formControlName="option_body"></quill-editor>
+                  <quill-editor formControlName="option_body" [modules]="{toolbar: [[ { 'list': 'ordered'}, { 'list': 'bullet' },
+                  { 'script': 'sub'}, { 'script': 'super' },'image',{ 'align': [] }]]}"></quill-editor>
                   <div *ngIf="submitted && options.controls[i].controls.option_body.errors" class="invalid-feedback">
                     <div *ngIf="options.controls[i].controls.option_body.errors.required">Please enter some text.</div>
                   </div>
@@ -87,7 +88,8 @@
         <!-- <app-ngx-editor [placeholder]="'Enter text here...'" formControlName="explanation_body" [spellcheck]="true"
           [ngClass]="{ 'is-invalid': submitted && f.explanation_body.errors }" height="200px">Explanation here
         </app-ngx-editor> -->
-        <quill-editor formControlName="explanation_body"></quill-editor>
+        <quill-editor formControlName="explanation_body" [modules]="{toolbar: [[ { 'list': 'ordered'}, { 'list': 'bullet' },
+        { 'script': 'sub'}, { 'script': 'super' },'image',{ 'align': [] }]]}"></quill-editor>
         <div *ngIf="submitted && options_required && f.explanation_body.errors" class="invalid-feedback">
           <div *ngIf="f.explanation_body.errors.required">Please enter some text.</div>
         </div>

@@ -10,12 +10,15 @@ export class ContactComponent implements OnInit {
 
   user: any;
 
-  constructor(public AuthService: AuthService) { }
+  constructor(public authService: AuthService) {
+    this.authService.getUser().subscribe(
+      user => {
+        this.user = user;
+      }
+    );
+   }
 
   ngOnInit() {
-    this.AuthService.getUser().subscribe(data => {
-      this.user = data;
-    });
   }
 
 }

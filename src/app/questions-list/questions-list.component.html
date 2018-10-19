@@ -1,9 +1,8 @@
 
-<h1>All Questions</h1>
-<div style="margin-top:20px;">
+<div>
   <button type="button" class="button btn-danger" (click)='deleteCustomers()'>Delete All</button>
 </div>
 <div *ngFor="let question of questions">
-  <app-question-details [question]='question'></app-question-details>
+  <app-question [question]='question' [allowEdit]='allowEdit'></app-question>
 </div>
 

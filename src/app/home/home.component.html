@@ -1,21 +1,2 @@
-<!-- <ul>
-  <li *ngFor="let todo of (todos$ | async)">
-    {{ todo.text }}
-    <p>{{todo.type}}</p>
-  </li>
-</ul> -->
-<ul class="nav nav-tabs">
-    <li class="nav-item">
-        <a  class="nav-link" routerLink="dashboard" routerLinkActive="active" >All Questions</a>
-      </li>
-  <li class="nav-item">
-    <a  class="nav-link" routerLink="new" routerLinkActive="active" >New Question</a>
-  </li>
-  <li class="nav-item hidden">
-      <a  class="nav-link" routerLink="test" routerLinkActive="active" >Testing Component</a>
-    </li>
-  <!-- <li class="nav-item">
-    <a class="nav-link disabled" href="#">Disabled</a>
-  </li> -->
-</ul>
-<router-outlet></router-outlet>
+<app-questions-list [questions]='todos$' [allowEdit]='false' style="margin: 10px;"></app-questions-list>
+

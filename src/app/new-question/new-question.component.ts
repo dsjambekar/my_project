@@ -1,20 +1,21 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ChangeDetectorRef } from '@angular/core';
-import { QuestionsService } from '../../shared/questions.service';
+import { QuestionsService } from '../shared/questions.service';
 
 import { FormBuilder, FormGroup, FormArray, Validators, FormControl } from '@angular/forms';
-import { AuthService } from '../../shared/auth.service';
+import { AuthService } from '../shared/auth.service';
+
 
 @Component({
-  selector: 'app-new',
-  templateUrl: './new.component.html',
-  styleUrls: ['./new.component.css']
+  selector: 'app-new-question',
+  templateUrl: './new-question.component.html',
+  styleUrls: ['./new-question.component.css']
 })
-export class NewComponent implements OnInit {
-
+export class NewQuestionComponent implements OnInit {
   registerForm: FormGroup;
   submitted = false;
+  user: any;
 
   public _question: any;
   public options_required = true;
@@ -26,13 +27,17 @@ export class NewComponent implements OnInit {
   public difficultyList: string[];
   public optionTypeList: string[];
 
-  constructor(private route: ActivatedRoute,
-    private router: Router, private service: QuestionsService, private ref: ChangeDetectorRef,
-    private questionService: QuestionsService, private formBuilder: FormBuilder, public AuthService: AuthService) {
+  constructor(   private questionService: QuestionsService, private formBuilder: FormBuilder, public authService: AuthService) {
+
+    this.authService.getUser().subscribe(
+      user => {
+        this.user = user;
+      }
+    );
   }
 
-  ngOnInit() {
 
+  ngOnInit() {
     this.registerForm = this.formBuilder.group({
       question_body: ['', Validators.required],
       category: '',
@@ -57,12 +62,11 @@ export class NewComponent implements OnInit {
       ])
     });
 
-    this.service.getQuestionByKey(this.route.snapshot.paramMap.get('key'))
-      .subscribe(data => {
-        this.registerForm.setValue(data);
-      });
+    // this.service.getQuestionByKey(this.route.snapshot.paramMap.get('key'))
+    //   .subscribe(data => {
+    //     this.registerForm.setValue(data);
+    //   });
 
-    console.log(this._question);
     this.categoryList = ['VA', 'QA', 'LR', 'DI'];
     this.difficultyList = ['Easy', 'Medium', 'Hard'];
     this.optionTypeList = ['Single', 'Multiple'];
@@ -102,14 +106,10 @@ export class NewComponent implements OnInit {
 
     this._question = this.registerForm.value;
 
-
-
-    this.AuthService.getUser().subscribe(data => {
-      this._question.created_by = data.uid;
-    });
+    this._question.created_by = this.user.uid;
 
     this._question.created_at = Date.now();
-    this._question.created_by = 'some user id';
+    this._question.created_by = this.user.uid;
 
     this.questionService.addNewQuestion(this._question);
 
@@ -144,5 +144,4 @@ export class NewComponent implements OnInit {
       this.addOptions();
     }
   }
-
 }

@@ -1,38 +1,35 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { TestService } from '../shared/test.service';
+import { AuthService } from '../shared/auth.service';
 
 @Component({
   selector: 'app-test',
   templateUrl: './test.component.html',
-  styleUrls: ['./test.component.css']
+  styleUrls: ['./test.component.css'],
+  providers: [TestService]
 })
-export class TestComponent implements OnInit {
+export class TestComponent {
 
-  registerForm: FormGroup;
-  submitted = false;
+  astronauts = ['Lovell', 'Swigert', 'Haise'];
+  history: string[] = [];
+  missions = ['Fly to the moon!',
+    'Fly to mars!',
+    'Fly to Vegas!'];
+  nextMission = 0;
+  user: any;
 
-  constructor(private formBuilder: FormBuilder) { }
-
-  ngOnInit() {
-      this.registerForm = this.formBuilder.group({
-          firstName: ['', Validators.required],
-          lastName: ['', Validators.required],
-          email: ['', [Validators.required, Validators.email]],
-          password: ['', [Validators.required, Validators.minLength(6)]]
+  constructor(private missionService: TestService, private authService: AuthService) {
+    missionService.missionConfirmed$.subscribe(
+      astronaut => {
+        this.history.push(`${astronaut} confirmed the mission`);
       });
   }
 
-  // convenience getter for easy access to form fields
-  get f() { return this.registerForm.controls; }
-
-  onSubmit() {
-      this.submitted = true;
-
-      // stop here if form is invalid
-      if (this.registerForm.invalid) {
-          return;
-      }
-
-      alert('SUCCESS!! :-)')
+  announce() {
+    let mission = this.missions[this.nextMission++];
+    this.missionService.announceMission(mission);
+    this.history.push(`Mission "${mission}" announced`);
+    if (this.nextMission >= this.missions.length) { this.nextMission = 0; }
   }
 }

@@ -28,6 +28,20 @@ export class QuestionsService implements OnInit {
     return this.questions$;
   }
 
+  public getAllQuestionsByUser(user: any): AngularFireList<Question> {
+    // return this.af.list('/questions').valueChanges();
+    return this.af.list('/questions',
+      ref => ref.orderByChild('created_by').equalTo(user.uid)
+    );
+  }
+
+  public getAllPublicQuestions(): AngularFireList<Question> {
+    // return this.af.list('/questions').valueChanges();
+    return this.af.list('/questions',
+      ref => ref.orderByChild('is_public').equalTo(true)
+    );
+  }
+
   getQuestionByKey(key: number | string): any {
     return this.af.object('/questions/' + key).valueChanges();
   }
@@ -37,7 +51,7 @@ export class QuestionsService implements OnInit {
     this.questions$.push(qustion);
   }
 
-  updateCustomer(key: string, value: any): void {
+  updateQuestion(key: string, value: any): void {
     this.questions$.update(key, value).catch(error => this.handleError(error));
   }
 
