@@ -1,32 +1,41 @@
 <div class="question-details">
+  <div id="print-section">
+    <div class=" col-lg-12 col-lg-offset-8">
+      <kbd>{{question.difficulty}}</kbd>
+&nbsp;&nbsp;
+      <kbd>{{question.category}}</kbd>
+&nbsp;&nbsp;
 
-  <div class=" col-lg-12 col-lg-offset-8">
-    <kbd>{{question.difficulty}}</kbd>
+      <kbd *ngIf="question.is_public">Public</kbd>
+      <a *ngIf="allowEdit" (click)="toggleView()"> <span class="glyphicon glyphicon-pencil"></span></a>
+      <!-- <a [attr.data-target]="'#' + question.key" (click)="toggleText()" > <span class="glyphicon glyphicon-eye-open"></span></a> -->
 
-    <kbd>{{question.category}}</kbd>
-    <kbd *ngIf="question.is_public">Public</kbd>
-    <a *ngIf="allowEdit" (click)="toggleView()"> <span class="glyphicon glyphicon-pencil"></span></a>
-    <!-- <a [attr.data-target]="'#' + question.key" (click)="toggleText()" > <span class="glyphicon glyphicon-eye-open"></span></a> -->
-
-    <a (click)='deleteQuestion(question.key)' *ngIf="allowEdit"><i class="material-icons" style="font-size:15px">delete</i></a>
-  </div>
-  <div [innerHTML]="question.question_body"></div>
-
-  <button data-toggle="collapse" [attr.data-target]="'#' + question.key" (click)="toggleText()"><i class="fa fa-eye"></i>{{showMoreText}}</button>
-  <div id="{{question.key}}" class="collapse" >
-    <div style="margin-top:5px;">
-      <b>Options</b>
-      <table class="table table-responsive">
-        <tr *ngFor="let option of question.options;let i = index">
-          <td style="width: 1%">({{i+1}})   </td>
-          <td style="width: 1%"><span *ngIf="option.is_correct" class="glyphicon glyphicon-ok"></span></td>
-          <td style="width: 50%">
-            <div [innerHTML]="option.option_body"></div>
-          </td>
-        </tr>
-      </table>
+      <a (click)='deleteQuestion(question.key)' *ngIf="allowEdit"><i class="material-icons" style="font-size:15px">delete</i></a>
     </div>
-    <b>Explanation</b>
-    <div [innerHTML]="question.explanation_body"></div>
+    <div [innerHTML]="question.question_body"></div>
+
+    <button data-toggle="collapse" [attr.data-target]="'#' + question.key" (click)="toggleText()"><i class="fa fa-eye"></i>{{showMoreText}}</button>
+
+    <br/>
+
+    <div id="{{question.key}}" class="collapse">
+
+      <div style="margin-top:5px;" *ngIf="question.options_required">
+        <b>Options</b>
+        <table class="table table-responsive">
+          <tr *ngFor="let option of question.options;let i = index">
+            <td style="width: 1%">({{i+1}}) </td>
+            <td style="width: 1%"><span *ngIf="option.is_correct" class="glyphicon glyphicon-ok"></span></td>
+            <td style="width: 50%">
+              <div [innerHTML]="option.option_body"></div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <br/>
+      <b>Explanation</b>
+      <div [innerHTML]="question.explanation_body"></div>
+    </div>
   </div>
+  <button (click)="toggleText();print()" data-toggle="collapse" [attr.data-target]="'#' + question.key" >print</button>
 </div>

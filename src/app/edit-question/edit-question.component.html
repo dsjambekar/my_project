@@ -17,7 +17,15 @@
 
     </div>
 
-    <div style="margin:5px">
+
+
+
+    <div class="form-group">
+      Options required
+      <input type="checkbox" (change)="toggleOptionsRequired()" formControlName="options_required">
+    </div>
+
+    <div style="margin:5px"  *ngIf="question.options_required">
       <b> Number of Options</b>
       <select [(ngModel)]="numberOfOptions" [ngModelOptions]="{standalone: true}" (change)="onNumberOfOptionsChanged()">
         <option value="2">2</option>
@@ -27,20 +35,14 @@
       </select>
     </div>
 
-
-    <div class="form-group">
-      Options required
-      <input type="checkbox" (change)="toggleOptionsRequired()" formControlName="options_required">
-    </div>
-
     <quill-editor formControlName="question_body" [modules]="{toolbar: [[ { 'list': 'ordered'}, { 'list': 'bullet' },
   { 'script': 'sub'}, { 'script': 'super' },'image',{ 'align': [] }]]}"></quill-editor>
-    <!-- <div *ngIf="submitted && f.question_body.errors" class="invalid-feedback">
+    <div *ngIf="submitted && f.question_body.errors" class="invalid-feedback">
     <div *ngIf="f.question_body.errors.required">Question is required</div>
-  </div> -->
+  </div>
 
     <div>
-      <div style="margin-top:5px;">
+      <div style="margin-top:5px;"  *ngIf="question.options_required">
         <b>Options</b>
         <div formArrayName="options">
           <table class="table table-responsive table-bordered">
@@ -63,6 +65,9 @@
       <b>Explanation</b>
       <quill-editor formControlName="explanation_body" [modules]="{toolbar: [[ { 'list': 'ordered'}, { 'list': 'bullet' },
       { 'script': 'sub'}, { 'script': 'super' },'image',{ 'align': [] }]]}"></quill-editor>
+      <div *ngIf="submitted && f.explanation_body.errors" class="invalid-feedback">
+        <div *ngIf="f.explanation_body.errors.required">Please enter explanation_body.</div>
+      </div>
     </div>
     <div class="form-group">
       <button class="btn btn-primary">Save</button>

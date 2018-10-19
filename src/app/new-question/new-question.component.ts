@@ -90,7 +90,7 @@ export class NewQuestionComponent implements OnInit {
   initOption() {
     // initialize our address
     return this.formBuilder.group({
-      option_body: ['', Validators.required],
+      option_body: ['Some text here', Validators.required],
       is_correct: [true]
     });
   }
@@ -118,12 +118,12 @@ export class NewQuestionComponent implements OnInit {
 
   toggleOptionsRequired = () => {
     this.options_required = !this.options_required;
-    if (!this.options_required) {
-      this.numberOfOptions = 0;
-    } else {
-      this.numberOfOptions = 4;
-    }
-    this.onNumberOfOptionsChanged();
+    // if (!this.options_required) {
+    //   this.numberOfOptions = 0;
+    // } else {
+    //   this.numberOfOptions = 4;
+    // }
+    // this.onNumberOfOptionsChanged();
   }
 
   tabChanged(tabName: string) {

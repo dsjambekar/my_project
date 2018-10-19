@@ -37,7 +37,11 @@ export class EditQuestionComponent implements OnInit {
     this.difficultyList = ['Easy', 'Medium', 'Hard'];
     this.optionTypeList = ['Single', 'Multiple'];
 
-    this.numberOfOptions = this.question.options.length;
+    if (this.question.options) {
+      this.numberOfOptions = this.question.options.length;
+    } else {
+      this.numberOfOptions = 4;
+    }
 
     this.registerForm = this.formBuilder.group({
       key: ['', Validators.required],
@@ -45,7 +49,7 @@ export class EditQuestionComponent implements OnInit {
       category: '',
       difficulty: '',
       is_public: false,
-      options_required: true,
+      options_required: this.question.options_required,
       created_at: '',
       created_by: '',
       option_type: ['Single'],
@@ -59,7 +63,9 @@ export class EditQuestionComponent implements OnInit {
 
     });
 
-    this.onNumberOfOptionsChanged();
+    if (this.numberOfOptions > 0) {
+      this.onNumberOfOptionsChanged();
+    }
 
     this.registerForm.setValue(this.question);
 
@@ -80,7 +86,7 @@ export class EditQuestionComponent implements OnInit {
   initOption() {
     // initialize our address
     return this.formBuilder.group({
-      option_body: ['', Validators.required],
+      option_body: ['Some text here', Validators.required],
       is_correct: [true]
     });
   }
@@ -122,6 +128,16 @@ export class EditQuestionComponent implements OnInit {
     this.questionService.updateQuestion(this.question.key, this.question);
 
     alert('SUCCESS!! :-)');
+  }
+
+  toggleOptionsRequired = () => {
+    this.question.options_required = !this.question.options_required;
+    // if (!this.question.options_required) {
+    //   this.numberOfOptions = 0;
+    // } else {
+    //   this.numberOfOptions = 4;
+    // }
+    // this.onNumberOfOptionsChanged();
   }
 
   onNumberOfOptionsChanged() {

@@ -11,7 +11,7 @@ import { map } from 'rxjs/operators';
 export class RepoComponent implements OnInit {
 
   private user: any;
-  private questions: any;
+  questions: any;
 
   constructor(private authService: AuthService, private questionService: QuestionsService) {
     this.authService.getUser().subscribe(

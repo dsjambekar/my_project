@@ -1,6 +1,6 @@
 
-<div>
-  <button type="button" class="button btn-danger" (click)='deleteCustomers()'>Delete All</button>
+<div *ngIf="allowEdit">
+  <button type="button" class="button btn-danger" (click)='deleteAllQuestions()'>Delete All</button>
 </div>
 <div *ngFor="let question of questions">
   <app-question [question]='question' [allowEdit]='allowEdit'></app-question>
