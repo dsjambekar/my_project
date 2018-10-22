@@ -31,7 +31,7 @@ export class QuestionsService implements OnInit {
   public getAllQuestionsByUser(user: any): AngularFireList<Question> {
     // return this.af.list('/questions').valueChanges();
     return this.af.list('/questions',
-      ref => ref.orderByChild('created_by').equalTo(user.uid)
+      ref => ref.orderByChild('created_by_id').equalTo(user.uid)
     );
   }
 

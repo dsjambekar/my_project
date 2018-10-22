@@ -2,7 +2,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { FormsModule, ReactiveFormsModule  } from '@angular/forms';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HttpClientJsonpModule } from '@angular/common/http';
 
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
@@ -24,6 +24,7 @@ import { NgxEditorModule } from 'ngx-editor';
 import { QuillModule } from 'ngx-quill';
 import { AuthService } from './shared/auth.service';
 
+
 import {
   SocialLoginModule,
   AuthServiceConfig,
@@ -40,21 +41,8 @@ import { RepoComponent } from './repo/repo.component';
 import { NewQuestionComponent } from './new-question/new-question.component';
 import { EditQuestionComponent } from './edit-question/edit-question.component';
 import { QuestionComponent } from './question/question.component';
-
-
-
-// Configs
-// export function getAuthServiceConfigs() {
-//   let config = new AuthServiceConfig(
-//       [
-
-//         {
-//           id: GoogleLoginProvider.PROVIDER_ID,
-//           provider: new GoogleLoginProvider("559209906236-9g1a12rompmqdspd5ngrg88cppv4ceov.apps.googleusercontent.com")
-//         }
-//       ]);
-//   return config;
-// }
+import { ViewQuestionComponent } from './view-question/view-question.component';
+import { ShareButtonsModule } from 'ngx-sharebuttons';
 
 @NgModule({
   declarations: [
@@ -71,8 +59,10 @@ import { QuestionComponent } from './question/question.component';
     RepoComponent,
     NewQuestionComponent,
     EditQuestionComponent,
-    QuestionComponent
-  ],
+    QuestionComponent,
+    ViewQuestionComponent,
+   ],
+
   imports: [
     BrowserModule
     , AppRoutingModule
@@ -88,6 +78,8 @@ import { QuestionComponent } from './question/question.component';
     , NgxEditorModule
     , QuillModule
     , HttpClientModule
+    , HttpClientJsonpModule, // (Optional) For linkedIn & Tumblr counts
+    ShareButtonsModule.forRoot()
   ],
   providers: [
     AuthService,

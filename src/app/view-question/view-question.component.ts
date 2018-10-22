@@ -3,11 +3,11 @@ import { ActivatedRoute } from '@angular/router';
 import { QuestionsService } from '../shared/questions.service';
 
 @Component({
-  selector: 'app-question-details',
-  templateUrl: './question-details.component.html',
-  styleUrls: ['./question-details.component.css']
+  selector: 'app-view-question',
+  templateUrl: './view-question.component.html',
+  styleUrls: ['./view-question.component.css']
 })
-export class QuestionDetailsComponent implements OnInit {
+export class ViewQuestionComponent implements OnInit {
 
   showMoreText = 'Show more..';
   @Input() question: any;
@@ -18,18 +18,6 @@ export class QuestionDetailsComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.route.params.subscribe(params => {
-      this.getQuestionByKey(params['key']) ; // (+) converts string 'id' to a number
-
-      // In a real app: dispatch action to load the details here.
-   });
-  }
-
-  getQuestionByKey(key:any){
-    this.service.getQuestionByKey(key).subscribe(question => {
-      this.question = question;
-      console.log(this.question);
-    });
   }
 
   toggleText() {
@@ -84,3 +72,4 @@ export class QuestionDetailsComponent implements OnInit {
     popupWin.document.close();
   }
 }
+

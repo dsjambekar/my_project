@@ -1,7 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { AngularFirestore } from 'angularfire2/firestore';
-import { Observable } from 'rxjs';
-import { SessionService } from './shared/session.service';
 import { AuthService } from './shared/auth.service';
 
 @Component({

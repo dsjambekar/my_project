@@ -1,6 +1,14 @@
+/** Import core style */
+@import "~ngx-sharebuttons/styles/share-buttons.css";
+ 
+/** Import a theme */
+@import "~ngx-sharebuttons/styles/themes/circles/circles-theme.css";
+
 @import '~quill/dist/quill.core.css';
 @import '~quill/dist/quill.bubble.css';
 @import '~quill/dist/quill.snow.css';
+
+
     /* Remove the navbar's default margin-bottom and rounded borders */
     .navbar {
       margin-bottom: 0;

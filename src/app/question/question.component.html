@@ -1,2 +1,2 @@
-<app-question-details *ngIf="!showEdit" [allowEdit]='allowEdit' [question]='question' (viewToggled)="onViewToggled($event)"></app-question-details>
+<app-view-question *ngIf="!showEdit" [allowEdit]='allowEdit' [question]='question' (viewToggled)="onViewToggled($event)"></app-view-question>
 <app-edit-question *ngIf="showEdit" [question]='question' (viewToggled)="onViewToggled($event)"></app-edit-question>

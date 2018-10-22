@@ -43,12 +43,21 @@
 
     <div>
       <div style="margin-top:5px;"  *ngIf="question.options_required">
+        <!-- <div style="margin:5px" class="form-group">
+          <b>Type of Options</b>
+          <select id="option_type" (ngModelChange)="toggleOptionType()" formControlName="option_type" >
+            <option *ngFor="let o of optionTypeList" [value]="o"> {{o}}
+            </option>
+          </select>
+        </div> -->
         <b>Options</b>
         <div formArrayName="options">
           <table class="table table-responsive table-bordered">
             <tr *ngFor="let address of options.controls;let i = index">
               <td [formGroupName]="i">
-                <input type="checkBox" formControlName="is_correct" />
+                  <input type="checkBox" formControlName="is_correct" />
+                  <!-- <input *ngIf="this.option_type == 'Multiple'" type="checkBox" formControlName="is_correct" />
+                <input name="options" *ngIf="this.option_type == 'Single'" type="radio" formControlName="is_correct" /> -->
                 </td>
                 <td [formGroupName]="i">
                 <!-- <app-ngx-editor formControlName="option_body" [spellcheck]="true" height="100px" [ngClass]="{ 'is-invalid': submitted && options.controls[i].errors }"></app-ngx-editor> -->

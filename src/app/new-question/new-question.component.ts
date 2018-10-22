@@ -19,6 +19,7 @@ export class NewQuestionComponent implements OnInit {
 
   public _question: any;
   public options_required = true;
+  public option_type = "Single";
 
   public numberOfOptions = 4;
 
@@ -45,15 +46,10 @@ export class NewQuestionComponent implements OnInit {
       is_public: false,
       options_required: true,
       created_at: '',
-      created_by: '',
-      option_type: ['Single'],
+      created_by_id: '',
+      created_by_name: '',
+      option_type: [this.option_type],
       explanation_body: ['', Validators.required],
-      // options: this.formBuilder.array([
-      //   this.formBuilder.control('', Validators.required),
-      //   this.formBuilder.control('', Validators.required),
-      //   this.formBuilder.control('', Validators.required),
-      //   this.formBuilder.control('', Validators.required)
-      // ])
       options: this.formBuilder.array([
         this.initOption(),
         this.initOption(),
@@ -61,11 +57,6 @@ export class NewQuestionComponent implements OnInit {
         this.initOption()
       ])
     });
-
-    // this.service.getQuestionByKey(this.route.snapshot.paramMap.get('key'))
-    //   .subscribe(data => {
-    //     this.registerForm.setValue(data);
-    //   });
 
     this.categoryList = ['VA', 'QA', 'LR', 'DI'];
     this.difficultyList = ['Easy', 'Medium', 'Hard'];
@@ -106,24 +97,28 @@ export class NewQuestionComponent implements OnInit {
 
     this._question = this.registerForm.value;
 
-    this._question.created_by = this.user.uid;
+    this._question.created_by_id = this.user.uid;
+    this._question.created_by_name = this.user.displayName;
 
     this._question.created_at = Date.now();
-    this._question.created_by = this.user.uid;
 
     this.questionService.addNewQuestion(this._question);
 
     alert('SUCCESS!! :-)');
+    this.registerForm.reset();
   }
 
   toggleOptionsRequired = () => {
     this.options_required = !this.options_required;
-    // if (!this.options_required) {
-    //   this.numberOfOptions = 0;
-    // } else {
-    //   this.numberOfOptions = 4;
-    // }
-    // this.onNumberOfOptionsChanged();
+  }
+
+  toggleOptionType = () => {
+    if(this.option_type == "Multiple"){
+      this.option_type = "Single";
+    } else {
+      this.option_type = "Multiple";
+    }
+
   }
 
   tabChanged(tabName: string) {

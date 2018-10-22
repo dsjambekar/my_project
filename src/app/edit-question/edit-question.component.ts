@@ -18,6 +18,8 @@ export class EditQuestionComponent implements OnInit {
   submitted = false;
   user: any;
   numberOfOptions = 0;
+  public option_type: string;
+
 
   public categoryList: string[];
   public difficultyList: string[];
@@ -51,8 +53,9 @@ export class EditQuestionComponent implements OnInit {
       is_public: false,
       options_required: this.question.options_required,
       created_at: '',
-      created_by: '',
-      option_type: ['Single'],
+      created_by_id: '',
+      created_by_name: '',
+      option_type: '',
       explanation_body: ['', Validators.required],
       options: this.formBuilder.array([
         this.initOption(),
@@ -68,12 +71,7 @@ export class EditQuestionComponent implements OnInit {
     }
 
     this.registerForm.setValue(this.question);
-
-    // this.registerForm.setControl('options', this.formBuilder.array(this.question.options || []));
-    console.log(this.registerForm);
-    console.log(this.options);
-
-
+    this.option_type = this.question.option_type;
   }
 
 
@@ -105,6 +103,15 @@ export class EditQuestionComponent implements OnInit {
     }
   }
 
+  toggleOptionType = () => {
+    if(this.option_type == "Multiple"){
+      this.option_type = "Single";
+    } else {
+      this.option_type = "Multiple";
+    }
+
+  }
+
   toggleView() {
     this.viewToggled.emit(false);
   }
@@ -120,7 +127,7 @@ export class EditQuestionComponent implements OnInit {
 
     this.question = this.registerForm.value;
 
-    this.question.created_by = this.user.uid;
+    // this.question.created_by = this.user.uid;
 
     // this.question.created_at = Date.now();
     // this._question.created_by = 'some user id';
