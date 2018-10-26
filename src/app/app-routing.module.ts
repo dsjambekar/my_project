@@ -4,7 +4,6 @@ import { RouterModule, Routes } from '@angular/router';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 import { HomeComponent } from './home/home.component';
 import { ContactComponent } from './contact/contact.component';
-import { AuthGuard } from './shared/auth-guard.service';
 import { RepoComponent } from './repo/repo.component';
 import { QuestionDetailsComponent } from './question-details/question-details.component';
 
@@ -13,7 +12,7 @@ const appRoutes: Routes = [
   { path: 'repo', component: RepoComponent },
   { path: 'home/question-details/:key', component: QuestionDetailsComponent },
   { path: 'repo/question-details/:key', component: QuestionDetailsComponent },
-  { path: 'contact', canActivate: [AuthGuard], component: ContactComponent },
+  { path: 'contact', component: ContactComponent },
   { path: '', redirectTo: '/home', pathMatch: 'full' },
   { path: '**', component: PageNotFoundComponent }
 

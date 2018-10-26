@@ -32,7 +32,9 @@ export class RepoComponent implements OnInit {
         changes.map(c => ({ key: c.payload.key, ...c.payload.val() }))
       )
     ).subscribe(questions => {
-      this.questions = questions;
+      this.questions = questions.sort((a: any, b: any) =>
+        new Date(b.created_at).getTime() - new Date(a.created_at).getTime()
+      );
     });
   }
 

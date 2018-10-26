@@ -18,13 +18,16 @@ export class HomeComponent implements OnInit {
   todos$: any;
 
   ngOnInit() {
-     this.service.getAllPublicQuestions().snapshotChanges().pipe(
-          map(changes =>
-            changes.map(c => ({ key: c.payload.key, ...c.payload.val() }))
-          )
-        ).subscribe(questions => {
-          this.todos$ = questions;
-        });
+    this.service.getAllPublicQuestions().snapshotChanges().pipe(
+      map(changes =>
+        changes.map(c => ({ key: c.payload.key, ...c.payload.val() }))
+      )
+    ).subscribe(questions => {
+      this.todos$ = questions.sort((a: any, b: any) =>
+        new Date(b.created_at).getTime() - new Date(a.created_at).getTime()
+      );
+    });
+
   }
 
 }

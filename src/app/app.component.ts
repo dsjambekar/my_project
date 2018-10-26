@@ -10,30 +10,23 @@ export class AppComponent implements OnInit {
   title = 'The Repository';
   isUserLoggedIn: boolean;
   user: any;
-  constructor(public AuthService: AuthService) {
+  constructor(public authService: AuthService) {
+  }
 
-    // AuthService.user$.subscribe(
-    //   u => {
-    //     this.user = u;
-    //     console.log(u);
+  ngOnInit() { }
 
-    //   });
-   }
+  onLoginChange(user: any) {
+    this.user = user;
+    // this.userService.addNode(this.user);
+  }
 
-   ngOnInit() {  }
-
-   onLoginChange(user: any) {
-     this.user = user;
-     // this.userService.addNode(this.user);
-   }
-
-  login(){
-    this.AuthService.loginWithGoogle();
+  login() {
+    this.authService.loginWithGoogle();
     this.isUserLoggedIn = true;
   }
 
-  logout(){
-    this.AuthService.logout();
+  logout() {
+    this.authService.logout();
     this.isUserLoggedIn = false;
   }
 

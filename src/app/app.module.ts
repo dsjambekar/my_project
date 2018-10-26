@@ -1,7 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { FormsModule, ReactiveFormsModule  } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule, HttpClientJsonpModule } from '@angular/common/http';
 
 import { AppComponent } from './app.component';
@@ -19,7 +19,7 @@ import { environment } from '../environments/environment.prod';
 import { FroalaEditorModule, FroalaViewModule } from 'angular-froala-wysiwyg';
 import { HomeComponent } from './home/home.component';
 import { SigninComponent } from './signin/signin.component';
-import { StorageServiceModule} from 'angular-webstorage-service';
+import { StorageServiceModule } from 'angular-webstorage-service';
 import { NgxEditorModule } from 'ngx-editor';
 import { QuillModule } from 'ngx-quill';
 import { AuthService } from './shared/auth.service';
@@ -27,12 +27,9 @@ import { AuthService } from './shared/auth.service';
 
 import {
   SocialLoginModule,
-  AuthServiceConfig,
-  GoogleLoginProvider,
 
 } from 'angular-6-social-login';
 import { ContactComponent } from './contact/contact.component';
-import { AuthGuard } from './shared/auth-guard.service';
 import { TestComponent } from './test/test.component';
 import { QuestionDetailsComponent } from './question-details/question-details.component';
 import { QuestionsListComponent } from './questions-list/questions-list.component';
@@ -43,6 +40,7 @@ import { EditQuestionComponent } from './edit-question/edit-question.component';
 import { QuestionComponent } from './question/question.component';
 import { ViewQuestionComponent } from './view-question/view-question.component';
 import { ShareButtonsModule } from 'ngx-sharebuttons';
+import { LikeComponent } from './like/like.component';
 
 @NgModule({
   declarations: [
@@ -61,12 +59,13 @@ import { ShareButtonsModule } from 'ngx-sharebuttons';
     EditQuestionComponent,
     QuestionComponent,
     ViewQuestionComponent,
-   ],
+    LikeComponent,
+  ],
 
   imports: [
     BrowserModule
     , AppRoutingModule
-    , AngularFireModule.initializeApp( environment.firebase)
+    , AngularFireModule.initializeApp(environment.firebase)
     , AngularFirestoreModule
     , AngularFireDatabaseModule
     , FroalaEditorModule.forRoot(), FroalaViewModule.forRoot()
@@ -82,10 +81,11 @@ import { ShareButtonsModule } from 'ngx-sharebuttons';
     ShareButtonsModule.forRoot()
   ],
   providers: [
-    AuthService,
-    AuthGuard
+    AuthService
   ],
   bootstrap: [AppComponent]
 })
 export class AppModule {
+
+
 }

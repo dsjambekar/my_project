@@ -63,6 +63,29 @@ export class QuestionsService implements OnInit {
     this.questions$.remove().catch(error => this.handleError(error));
   }
 
+  likeThisQuestion(key: string, uid: string, liked: boolean): void {
+    const likedBys = this.af.list('/questions/' + key + '/likedBy');
+    const user_liked_questions = this.af.list('/users_liked_questions/',
+          ref => ref.orderByChild('uid').equalTo(uid).limitToFirst(1));
+
+    if (liked) {
+      if (likedBys.snapshotChanges.length === 0) {
+        const question = this.af.object('/questions/' + key);
+      question.update({ 'likedBy': [uid] });
+      } else {
+        likedBys.push(uid);
+      }
+
+      if (user_liked_questions.snapshotChanges.length === 1) {
+        user_liked_questions.push({ 'uid': uid, 'question_ids': [uid] });
+      } else {
+        user_liked_questions.push(uid);
+      }
+
+
+    }
+  }
+
   private handleError(error) {
     console.log(error);
   }

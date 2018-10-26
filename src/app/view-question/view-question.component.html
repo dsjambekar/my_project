@@ -6,23 +6,23 @@
   &nbsp;&nbsp;
         <kbd>{{question.category}}</kbd>
   &nbsp;&nbsp;
-  
+
         <kbd *ngIf="question.is_public">Public</kbd>
         <a *ngIf="allowEdit" (click)="toggleView()"> <span class="glyphicon glyphicon-pencil"></span></a>
         <!-- <a [attr.data-target]="'#' + question.key" (click)="toggleText()" > <span class="glyphicon glyphicon-eye-open"></span></a> -->
-  
+
         <a (click)='deleteQuestion(question.key)' *ngIf="allowEdit"><i class="material-icons" style="font-size:15px">delete</i></a>
-      
-        <a [routerLink]="['question-details', question.key]">Pop-Out</a>
+
+        <a target="_blank" [routerLink]="['question-details', question.key]">Pop-Out</a>
       </div>
       <div [innerHTML]="question.question_body"></div>
-      
+
       <button data-toggle="collapse" [attr.data-target]="'#' + question.key" (click)="toggleText()"><i class="fa fa-eye"></i>{{showMoreText}}</button>
-  
+
       <br/>
-  
+
       <div id="{{question.key}}" class="collapse">
-  
+
         <div style="margin-top:5px;" [ngClass]="question.options_required == false ? 'hidden': 'visible' ">
           <b>Options</b>
           <table class="table table-responsive">
@@ -40,6 +40,6 @@
         <div [innerHTML]="question.explanation_body"></div>
       </div>
     </div>
-    <button *ngIf="showMoreText == 'Show less'" (click)="toggleText();print()" data-toggle="collapse" [attr.data-target]="'#' + question.key" >print</button>
+    <app-like [question]='question' *ngIf="showMoreText == 'Show less'"></app-like>
+    <!-- <button *ngIf="showMoreText == 'Show less'" class="btn btn-sm btn-primary" (click)="toggleText();print()" data-toggle="collapse" [attr.data-target]="'#' + question.key" >print</button> -->
   </div>
-  

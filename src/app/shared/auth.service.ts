@@ -50,12 +50,8 @@ export class AuthService {
       .then((res) => this.router.navigate(['/']));
   }
 
-
   getUser() {
     return this._user.getValue();
   }
 
-  // addNode(data: User) {
-  //   this.user.next(data);
-  // }
 }

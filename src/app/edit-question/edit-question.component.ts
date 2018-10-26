@@ -104,10 +104,10 @@ export class EditQuestionComponent implements OnInit {
   }
 
   toggleOptionType = () => {
-    if(this.option_type == "Multiple"){
-      this.option_type = "Single";
+    if (this.option_type === 'Multiple') {
+      this.option_type = 'Single';
     } else {
-      this.option_type = "Multiple";
+      this.option_type = 'Multiple';
     }
 
   }
@@ -119,6 +119,18 @@ export class EditQuestionComponent implements OnInit {
   onSubmit() {
     this.submitted = true;
 
+    let isAnswerSelected = false;
+    for (let i = 0; i < this.numberOfOptions; i++) {
+      if (this.options.controls[i].value.is_correct) {
+        isAnswerSelected = true;
+      }
+    }
+
+    if (this.question.options_required && !isAnswerSelected) {
+      alert('Please select at least one option as answer.');
+      return;
+    }
+
     // stop here if form is invalid
     if (this.registerForm.invalid) {
       alert('Please enter all the values.');
@@ -127,11 +139,6 @@ export class EditQuestionComponent implements OnInit {
 
     this.question = this.registerForm.value;
 
-    // this.question.created_by = this.user.uid;
-
-    // this.question.created_at = Date.now();
-    // this._question.created_by = 'some user id';
-
     this.questionService.updateQuestion(this.question.key, this.question);
 
     alert('SUCCESS!! :-)');
@@ -139,12 +146,6 @@ export class EditQuestionComponent implements OnInit {
 
   toggleOptionsRequired = () => {
     this.question.options_required = !this.question.options_required;
-    // if (!this.question.options_required) {
-    //   this.numberOfOptions = 0;
-    // } else {
-    //   this.numberOfOptions = 4;
-    // }
-    // this.onNumberOfOptionsChanged();
   }
 
   onNumberOfOptionsChanged() {
@@ -155,10 +156,7 @@ export class EditQuestionComponent implements OnInit {
     }
 
     for (let i = 0; i < this.numberOfOptions; i++) {
-      // let option = '';
-      // this.options.push(option);
-      // this.registerForm.addControl(i.toString(), new FormControl('', Validators.required));
-       this.addOptions();
+      this.addOptions();
     }
   }
 

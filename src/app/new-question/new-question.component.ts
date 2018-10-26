@@ -19,7 +19,7 @@ export class NewQuestionComponent implements OnInit {
 
   public _question: any;
   public options_required = true;
-  public option_type = "Single";
+  public option_type = 'Single';
 
   public numberOfOptions = 4;
 

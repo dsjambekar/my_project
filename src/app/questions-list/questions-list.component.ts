@@ -28,7 +28,7 @@ export class QuestionsListComponent implements OnInit {
     );
   }
 
-  deleteAllQuestions(){
+  deleteAllQuestions() {
     this.questionService.deleteAll();
   }
 

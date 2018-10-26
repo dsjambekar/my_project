@@ -1,4 +1,4 @@
-<div class="question-details">
+<div *ngIf="question" class="question-details">
   <div  [attr.id]="'print-section' + question.key" id="print-section">
    <b *ngIf="!allowEdit">{{question.created_by_name}}</b>
     <div class=" col-lg-12 col-lg-offset-8">
@@ -36,7 +36,7 @@
       <div [innerHTML]="question.explanation_body"></div>
     </div>
   </div>
-  <share-buttons></share-buttons>
+  <share-buttons [description]="plainQuestionText" [include]="['facebook', 'twitter', 'google', 'whatsapp', 'print']"></share-buttons>
 
   <button (click)="toggleText();print()" data-toggle="collapse" [attr.data-target]="'#' + question.key" >print</button>
 </div>
