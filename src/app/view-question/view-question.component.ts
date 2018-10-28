@@ -15,6 +15,7 @@ export class ViewQuestionComponent implements OnInit {
   @Output() viewToggled = new EventEmitter<boolean>();
 
   constructor(private route: ActivatedRoute, private service: QuestionsService) {
+    this.showMoreText = 'Show more..';  
   }
 
   ngOnInit() {

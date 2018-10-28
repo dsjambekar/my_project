@@ -1,0 +1,50 @@
+[debug] [2018-10-28T00:38:57.879Z] ----------------------------------------------------------------------
+[debug] [2018-10-28T00:38:57.891Z] Command:       C:\Program Files\nodejs\node.exe C:\Users\AMO\AppData\Roaming\npm\node_modules\firebase-tools\bin\firebase deploy
+[debug] [2018-10-28T00:38:57.892Z] CLI Version:   3.18.4
+[debug] [2018-10-28T00:38:57.892Z] Platform:      win32
+[debug] [2018-10-28T00:38:57.892Z] Node Version:  v8.9.4
+[debug] [2018-10-28T00:38:57.924Z] Time:          Sun Oct 28 2018 02:38:57 GMT+0200 (W. Europe Daylight Time)
+[debug] [2018-10-28T00:38:57.925Z] ----------------------------------------------------------------------
+[debug] 
+[debug] [2018-10-28T00:38:58.133Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2018-10-28T00:38:58.135Z] > authorizing via signed-in user
+[debug] [2018-10-28T00:38:58.145Z] > refreshing access token with scopes: ["email","https://www.googleapis.com/auth/cloud-platform","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","openid"]
+[debug] [2018-10-28T00:38:58.146Z] >>> HTTP REQUEST POST https://www.googleapis.com/oauth2/v3/token  
+ { refresh_token: '1/koW2G7vGydnzi4t4lTNy-CQJ6wVlaqdt7D-K1uVFmbA',
+  client_id: '563584335869-fgrhgmd47bqnekij5i8b5pr03ho849e6.apps.googleusercontent.com',
+  client_secret: 'j9iVZfS8kkCEFUPaAeJV0sAi',
+  grant_type: 'refresh_token',
+  scope: 'email https://www.googleapis.com/auth/cloud-platform https://www.googleapis.com/auth/cloudplatformprojects.readonly https://www.googleapis.com/auth/firebase openid' } 
+ Sun Oct 28 2018 02:38:58 GMT+0200 (W. Europe Daylight Time)
+[debug] [2018-10-28T00:38:58.427Z] <<< HTTP RESPONSE 200
+[debug] [2018-10-28T00:38:58.472Z] >>> HTTP REQUEST GET https://admin.firebase.com/v1/projects/project1-1b168  
+  
+ Sun Oct 28 2018 02:38:58 GMT+0200 (W. Europe Daylight Time)
+[debug] [2018-10-28T00:38:59.228Z] <<< HTTP RESPONSE 200
+[debug] [2018-10-28T00:38:59.230Z] >>> HTTP REQUEST GET https://admin.firebase.com/v1/database/project1-1b168/tokens  
+  
+ Sun Oct 28 2018 02:38:59 GMT+0200 (W. Europe Daylight Time)
+[debug] [2018-10-28T00:38:59.992Z] <<< HTTP RESPONSE 200
+[info] 
+[info] === Deploying to 'project1-1b168'...
+[info] 
+[info] i  deploying hosting
+[info] i  hosting: preparing dist directory for upload...
+[debug] [2018-10-28T00:39:01.334Z] >>> HTTP REQUEST PUT https://deploy.firebase.com/v1/hosting/project1-1b168/uploads/-LPs60TDVxdFSia4s86s?fileCount=25&message=  
+  
+ Sun Oct 28 2018 02:39:01 GMT+0200 (W. Europe Daylight Time)
+[debug] [2018-10-28T00:39:32.096Z] <<< HTTP RESPONSE 410
+[debug] [2018-10-28T00:39:32.096Z] <<< HTTP RESPONSE BODY undefined
+[debug] [2018-10-28T00:39:32.097Z] TypeError: Cannot read property 'error' of undefined
+    at module.exports (C:\Users\AMO\AppData\Roaming\npm\node_modules\firebase-tools\lib\responseToError.js:10:13)
+    at Request._callback (C:\Users\AMO\AppData\Roaming\npm\node_modules\firebase-tools\lib\api.js:47:25)
+    at Request.self.callback (C:\Users\AMO\AppData\Roaming\npm\node_modules\firebase-tools\node_modules\request\request.js:185:22)
+    at emitTwo (events.js:126:13)
+    at Request.emit (events.js:214:7)
+    at Request.<anonymous> (C:\Users\AMO\AppData\Roaming\npm\node_modules\firebase-tools\node_modules\request\request.js:1157:10)
+    at emitOne (events.js:116:13)
+    at Request.emit (events.js:211:7)
+    at IncomingMessage.<anonymous> (C:\Users\AMO\AppData\Roaming\npm\node_modules\firebase-tools\node_modules\request\request.js:1079:12)
+    at Object.onceWrapper (events.js:313:30)
+[error] 
+[error] Error: An unexpected error has occurred.

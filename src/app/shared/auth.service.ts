@@ -41,13 +41,14 @@ export class AuthService {
     provider.setCustomParameters({
       prompt: 'select_account'
     });
-    this.afAuth.auth.signInWithPopup(provider);
+    this.afAuth.auth.signInWithPopup(provider)
+    .then((res) => window.location.reload(true));
   }
 
   logout() {
     // this.afAuth.auth.signOut();
     this.afAuth.auth.signOut()
-      .then((res) => this.router.navigate(['/']));
+      .then((res) => window.location.reload(true));
   }
 
   getUser() {

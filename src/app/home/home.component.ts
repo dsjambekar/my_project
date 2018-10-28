@@ -13,11 +13,18 @@ import { map } from 'rxjs/operators';
 export class HomeComponent implements OnInit {
 
 
-  constructor(private service: QuestionsService) { }
+  constructor(private service: QuestionsService) {
+    this.getPublicQuestions();
+
+   }
 
   todos$: any;
 
   ngOnInit() {
+
+  }
+
+  getPublicQuestions(){
     this.service.getAllPublicQuestions().snapshotChanges().pipe(
       map(changes =>
         changes.map(c => ({ key: c.payload.key, ...c.payload.val() }))
@@ -27,7 +34,6 @@ export class HomeComponent implements OnInit {
         new Date(b.created_at).getTime() - new Date(a.created_at).getTime()
       );
     });
-
   }
 
 }

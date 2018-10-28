@@ -8,6 +8,10 @@
   &nbsp;&nbsp;
 
         <kbd *ngIf="question.is_public">Public</kbd>
+        &nbsp;&nbsp;
+
+    <app-like [question]='question'></app-like>
+
         <a *ngIf="allowEdit" (click)="toggleView()"> <span class="glyphicon glyphicon-pencil"></span></a>
         <!-- <a [attr.data-target]="'#' + question.key" (click)="toggleText()" > <span class="glyphicon glyphicon-eye-open"></span></a> -->
 
@@ -40,6 +44,5 @@
         <div [innerHTML]="question.explanation_body"></div>
       </div>
     </div>
-    <app-like [question]='question' *ngIf="showMoreText == 'Show less'"></app-like>
     <!-- <button *ngIf="showMoreText == 'Show less'" class="btn btn-sm btn-primary" (click)="toggleText();print()" data-toggle="collapse" [attr.data-target]="'#' + question.key" >print</button> -->
   </div>

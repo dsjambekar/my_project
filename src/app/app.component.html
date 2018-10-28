@@ -27,14 +27,7 @@
 
     <div class="col-lg-2 sidenav">
         <div *ngIf="authService.user | async as user">
-            <div>{{user.displayName}} </div> <img [src]="user.photoURL" style="height:75px;width:75px">
-          <p><a href="#">Questions (20)</a></p>
-          <p><a href="#">-Created- (2)</a></p>
-          <p><a href="#">-Liked- (2)</a></p>
-          <p><a href="#">-Draft- (2)</a></p>
-          <p><a href="#">Interested Exams (5)</a></p>
-          <p><a href="#">Categories (4)</a></p>
-          <p><a href="#">Question Papers (1)</a></p>
+            <app-user-details></app-user-details>
         </div>
         <app-login (loggedIn)="onLoginChange($event)"></app-login>
 

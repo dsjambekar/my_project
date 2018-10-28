@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
 import { Component, OnInit } from '@angular/core';
-import { Observable } from 'rxjs/Observable';
 
 import { AngularFireDatabase, AngularFireList } from 'angularfire2/database';
 import { Question } from './module/question';
@@ -63,27 +62,21 @@ export class QuestionsService implements OnInit {
     this.questions$.remove().catch(error => this.handleError(error));
   }
 
-  likeThisQuestion(key: string, uid: string, liked: boolean): void {
-    const likedBys = this.af.list('/questions/' + key + '/likedBy');
-    const user_liked_questions = this.af.list('/users_liked_questions/',
-          ref => ref.orderByChild('uid').equalTo(uid).limitToFirst(1));
+  likeThisQuestion(questionKey: string, uid: string, liked: boolean): any {
+    const user_liked_questions = this.af.list('/users_liked_questions',
+      ref => ref.orderByChild('uid').equalTo(uid));
+    user_liked_questions.push({ 'uid': uid, 'question_ids': questionKey })
+    .then(_ => _.key);
+  }
 
-    if (liked) {
-      if (likedBys.snapshotChanges.length === 0) {
-        const question = this.af.object('/questions/' + key);
-      question.update({ 'likedBy': [uid] });
-      } else {
-        likedBys.push(uid);
-      }
+  unlikeThisQuestion(key: string) {
+    const user_liked_questions = this.af.list('/users_liked_questions');
+    user_liked_questions.remove(key);
+  }
 
-      if (user_liked_questions.snapshotChanges.length === 1) {
-        user_liked_questions.push({ 'uid': uid, 'question_ids': [uid] });
-      } else {
-        user_liked_questions.push(uid);
-      }
-
-
-    }
+  getLikedQuestionsByUser(uid: string): AngularFireList<any> {
+    return this.af.list('/users_liked_questions',
+      ref => ref.orderByChild('uid').equalTo(uid));
   }
 
   private handleError(error) {

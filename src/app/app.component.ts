@@ -10,6 +10,7 @@ export class AppComponent implements OnInit {
   title = 'The Repository';
   isUserLoggedIn: boolean;
   user: any;
+
   constructor(public authService: AuthService) {
   }
 
@@ -17,12 +18,15 @@ export class AppComponent implements OnInit {
 
   onLoginChange(user: any) {
     this.user = user;
+    // Location.reload();
     // this.userService.addNode(this.user);
+
   }
 
   login() {
     this.authService.loginWithGoogle();
     this.isUserLoggedIn = true;
+
   }
 
   logout() {

@@ -41,6 +41,7 @@ import { QuestionComponent } from './question/question.component';
 import { ViewQuestionComponent } from './view-question/view-question.component';
 import { ShareButtonsModule } from 'ngx-sharebuttons';
 import { LikeComponent } from './like/like.component';
+import { UserDetailsComponent } from './user-details/user-details.component';
 
 @NgModule({
   declarations: [
@@ -60,6 +61,7 @@ import { LikeComponent } from './like/like.component';
     QuestionComponent,
     ViewQuestionComponent,
     LikeComponent,
+    UserDetailsComponent,
   ],
 
   imports: [

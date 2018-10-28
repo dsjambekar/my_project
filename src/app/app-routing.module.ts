@@ -8,7 +8,7 @@ import { RepoComponent } from './repo/repo.component';
 import { QuestionDetailsComponent } from './question-details/question-details.component';
 
 const appRoutes: Routes = [
-  { path: 'home', component: HomeComponent },
+  { path: 'home', component: HomeComponent,  runGuardsAndResolvers: 'always', },
   { path: 'repo', component: RepoComponent },
   { path: 'home/question-details/:key', component: QuestionDetailsComponent },
   { path: 'repo/question-details/:key', component: QuestionDetailsComponent },
@@ -23,9 +23,7 @@ const appRoutes: Routes = [
   imports: [
     RouterModule.forRoot(
       appRoutes,
-      { enableTracing: true } // <-- debugging purposes only
-    )
-  ],
+      {onSameUrlNavigation: 'reload'})],
   exports: [
     RouterModule
   ]
